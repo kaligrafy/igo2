@@ -3,43 +3,45 @@
   "base": "_base",
   "layers": [
     {
-      "title": "Embâcle",
+      "id": "1",
+      "title": "Archives - 2 derniers jours",
       "sourceOptions": {
-        "type": "wms",
+        "type": "wfs",
         "url": "https://geoegl.msp.gouv.qc.ca/apis/ws/igo_gouvouvert.fcgi",
         "queryable": true,
-        "queryTitle": "no_seq_observation",
+        "queryTitle": "date_observation",
         "params": {
-          "layers": "vg_observation_v_inondation_embacle_wmst",
+          "featureTypes": "vg_observation_v_autre_wmst",
           "version": "1.3.0"
         },
-        "timeFilterable": true,
-        "timeFilter": {
-          "min": "2013",
-          "max": "2019",
-          "range": false,
-          "type": "year",
-          "style": "slider",
-          "step": 1,
-          "timeInterval": 2000
-        }
+        "sourceFields": [
+          { "name": "date_observation", "alias": "Date de l'observation" }
+        ],
+        "ogcFilters": {
+          "enabled": true,
+          "editable": true,
+          "allowedOperatorsType": "Time",
+          "filters":
+            {
+              "operator": "During",
+              "propertyName": "date_observation",
+              "begin": "now - 2 days",
+              "end": "now"
+            }
+        },
+        "minDate": "2016-01-01T00:00:00-05:00",
+        "maxDate": "2018-12-31T00:00:00-05:00",
+        "stepDate": "P1D"
       },
       "metadata": {
         "url": "https://www.donneesquebec.ca/recherche/fr/dataset/historique-publique-d-embacles-repertories-au-msp"
       }
     },
     {
+      "id": "2",
       "visible": false,
       "sourceOptions": {
         "url": "https://geoegl.msp.gouv.qc.ca/apis/ws/igo_gouvouvert.fcgi",
-        "timeFilterable": true,
-        "timeFilter": {
-          "min": "1990-01-01",
-          "max": "2020-03-28",
-          "style": "calendar",
-          "range": true,
-          "type": "date"
-        },
         "queryable": true,
         "queryFormat": "gml2",
         "queryTitle": "date_observation",
@@ -47,6 +49,19 @@
         "params": {
           "layers": "vg_observation_v_autre_wmst",
           "version": "1.3.0"
+        },
+        "sourceFields": [
+          { "name": "date_observation", "alias": "Date de l'observation" }
+        ],
+        "ogcFilters": {
+          "enabled": true,
+          "editable": true,
+          "allowedOperatorsType": "Time",
+          "filters":
+            {
+              "operator": "During",
+              "propertyName": "date_observation"
+            }
         },
         "type": "wms"
       }
