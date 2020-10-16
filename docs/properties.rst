@@ -748,15 +748,14 @@ Exemple
             :force:
 
             {
-                  
                   "title": "Points temps réel",
+                  "visible": true,
                   "sourceOptions": {
                         "type": "websocket",
                         "url": "wss://websocket.domain/api/websocket/",
                         "onmessage": "update",
                         "queryable": true,
-                        "queryTitle": "Véhicule : ${unitid}"
-                  }
+                        "queryTitle": "Véhicule : ${unitid}",
                   ...
             }
 
