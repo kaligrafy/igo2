@@ -1,0 +1,33 @@
+@import '~@igo2/core/style/foreground';
+
+$primary: mat-palette($mat-green, 800, 800, 800);
+$accent: mat-palette($mat-red, 900, 800, 700);
+$warn: mat-palette($mat-red);
+
+$temp-theme: mat-light-theme(
+    $primary,
+    $accent,
+    $warn
+);
+
+$color: mat-color(mat-palette($mat-grey, 900));
+$color2: mat-color(mat-palette($mat-green, 900));
+$foreground: (
+    base:              $color,
+    divider:           rgba($color, 0.12),
+    dividers:          rgba($color, 0.12),
+    disabled:          rgba($color, 0.38),
+    disabled-button:   rgba($color, 0.26),
+    disabled-text:     rgba($color, 0.38),
+    elevation:         $color,
+    hint-text:         rgba($color, 0.38),
+    secondary-text:    rgba($color, 0.54),
+    icon:              rgba($color2, 0.54),
+    icons:             rgba($color2, 0.54),
+    text:              rgba($color2, 0.87),
+    slider-min:        rgba($color, 0.87),
+    slider-off:        rgba($color, 0.26),
+    slider-off-active: rgba($color, 0.38)
+);
+
+$theme: map-merge($temp-theme, (foreground: $foreground));

@@ -42,3 +42,9 @@
   @include igo-all-theming($theme);
   @include app-theming($theme);
 }
+
+.noel-theme {
+  @import './noel.theme';
+  @include igo-all-theming($theme);
+  @include app-theming($theme);
+}
