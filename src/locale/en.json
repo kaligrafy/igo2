@@ -37,7 +37,8 @@
     "html": "<h1>Welcome to {{title}, the Québec goverment mapping application </h1><h2>Version {{version}}, build on {{releaseDate}}</h2>",
     "title": "",
     "closeButton": "Close",
-    "notShowCheck": "Do not show again"
+    "notShowCheck": "Do not show again",
+    "merryChristmas": "All IGO's collaborators wish you Happy Holidays !"
   },
   "oldBrowser": {
     "title": "Too old browser",
