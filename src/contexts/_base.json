@@ -10,6 +10,21 @@
   },
   "layers": [
     {
+      "id": "pere_noel",
+      "title": "Père Noël",
+      "visible": true,
+      "removable": false,
+      "sourceOptions": {
+        "type": "wms",
+        "optionsFromCapabilities": true,
+        "url": "https://geoegl.msp.gouv.qc.ca/apis/ws/mtq-applicatif",
+        "refreshIntervalSec": 3,
+        "params": {
+          "layers": "pere_noel"
+        }
+      }
+    },
+    {
       "id": "fond_osm",
       "title": "Open Street Map",
       "visible": false,

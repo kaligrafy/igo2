@@ -20,5 +20,22 @@
     "showAgainOnNewIGOVersion": true,
     "nbVisitToShow": 2,
     "nbVisitToShowAgain": 30
-  }
+  },
+  "mapOverlay": [{
+    "media": ["desktop"],
+    "cssClass": "top-left",
+    "imgSrc": "https://geoegl.msp.gouv.qc.ca/igo2/mtq-noel/particular/images/neige.gif",
+    "imgSize": "1000px",
+    "fixed": true,
+    "marginTop": "10px"
+  },
+  {
+    "media": ["desktop"],
+    "cssClass": "top-right",
+    "imgSrc": "https://geoegl.msp.gouv.qc.ca/igo2/mtq-noel/particular/images/neige.gif",
+    "imgSize": "1000px",
+    "fixed": true,
+    "marginTop": "10px"
+    }
+  ]
 }

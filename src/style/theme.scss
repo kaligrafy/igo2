@@ -47,4 +47,8 @@
   @import './noel.theme';
   @include igo-all-theming($theme);
   @include app-theming($theme);
+
+  .mapOverlayDefault {
+    pointer-events: none !important;
+  }
 }
