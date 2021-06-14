@@ -63,7 +63,6 @@ import {
   FeatureWorkspace,
   generateIdFromSourceOptions,
   computeOlFeaturesExtent,
-  TileDownloaderService,
   XYZDataSource
 } from '@igo2/geo';
 
@@ -301,7 +300,6 @@ export class PortalComponent implements OnInit, OnDestroy {
     public dialogWindow: MatDialog,
     private queryService: QueryService,
     private storageService: StorageService,
-    private downloadService: TileDownloaderService,
     private downloadState: DownloadState
   ) {
     this.hasExpansionPanel = this.configService.getConfig('hasExpansionPanel');
