@@ -63,7 +63,14 @@ import {
   FeatureWorkspace,
   generateIdFromSourceOptions,
   computeOlFeaturesExtent,
-  XYZDataSource
+  XYZDataSource,
+  FeatureStore,
+  VectorLayer,
+  FeatureDataSource,
+  tryBindStoreLayer,
+  tryAddLoadingStrategy,
+  FeatureMotion,
+  FeatureStoreLoadingStrategy
 } from '@igo2/geo';
 
 import {
@@ -91,8 +98,13 @@ import { HttpClient } from '@angular/common/http';
 import { WelcomeWindowComponent } from './welcome-window/welcome-window.component';
 import { WelcomeWindowService } from './welcome-window/welcome-window.service';
 import { MatPaginator } from '@angular/material/paginator';
-import { ObjectUtils } from '@igo2/utils';
+import { ObjectUtils, uuid } from '@igo2/utils';
 import olFormatGeoJSON from 'ol/format/GeoJSON';
+
+
+import OlFeature from 'ol/Feature';
+import { fromExtent } from 'ol/geom/Polygon';
+import * as olformat from 'ol/format';
 
 @Component({
   selector: 'app-portal',
@@ -159,6 +171,9 @@ export class PortalComponent implements OnInit, OnDestroy {
   private menuButtonReverseColor = false;
   public toastPanelHtmlDisplay = false;
 
+  public offlineRegionStore: FeatureStore = new FeatureStore([], {map: this.map});
+
+  
   @ViewChild('mapBrowser', { read: ElementRef, static: true })
   mapBrowser: ElementRef;
   @ViewChild('searchBar', { read: ElementRef, static: true })
@@ -387,6 +402,25 @@ export class PortalComponent implements OnInit, OnDestroy {
       });
     this.map.ol.once('rendercomplete', () => {
       this.readQueryParams();
+
+      const offlineRegionsLayer = new VectorLayer({
+        title: 'offlineRegionsLayer',
+        zIndex: 910,
+        source: new FeatureDataSource(),
+        showInLayerList: true,
+        workspace: {
+          enabled: true,
+        },
+        exportable: true,
+        browsable: false//,
+        // style: stopMarker
+      });
+      tryBindStoreLayer(this.offlineRegionStore, offlineRegionsLayer);
+      tryAddLoadingStrategy(this.offlineRegionStore, new FeatureStoreLoadingStrategy({
+        motion: FeatureMotion.None
+      }));
+
+
     });
 
     this.onSettingsChange$.subscribe(() => {
@@ -812,9 +846,57 @@ export class PortalComponent implements OnInit, OnDestroy {
       if(tileGrid) {
         const coord = tileGrid.getTileCoordForCoordAndZ(mapCoord, z);
         //console.log({coord, templateUrl, tileGrid});
+        this.grid2feature(tileGrid,coord)
         this.downloadState.addNewTileToDownload({coord, templateUrl, tileGrid});
       }
     })
+  }
+
+  grid2feature(tileGrid, coord) {
+    console.log(tileGrid.getTileCoordExtent(coord));
+
+    const id = uuid() // passe un id si tu veux
+    const previousRegion = this.offlineRegionStore.get(id);
+    const previousRegionRevision = previousRegion ? previousRegion.meta.revision : 0;
+
+    const polygonGeometry = fromExtent(tileGrid.getTileCoordExtent(coord));
+    const feature = new OlFeature(polygonGeometry);
+
+    console.log(polygonGeometry)
+    const projectionIn = 'EPSG:4326'
+    const projectionOut = 'EPSG:4326'
+
+    const featuresText: string = new olformat.GeoJSON().writeFeature(
+      feature,
+      {
+        dataProjection: projectionOut,
+        featureProjection: projectionIn,
+        featureType: 'feature',
+        featureNS: 'http://example.com/feature'
+      }
+    );
+    console.log(JSON.parse(featuresText).geometry)
+
+
+
+    const offlineRegionFeature: Feature = {
+      type: FEATURE,
+      geometry: JSON.parse(featuresText).geometry,
+      projection: this.map.projection,
+      properties: {
+        id:id,
+
+       // stopText,
+       // stopColor,
+        stopOpacity: 1
+      },
+      meta: {
+        id: id,
+        revision: previousRegionRevision + 1
+      },
+      ol: feature
+    };
+    this.offlineRegionStore.update(offlineRegionFeature);
   }
 
   updateMapBrowserClass() {
