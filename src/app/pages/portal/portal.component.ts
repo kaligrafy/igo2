@@ -415,8 +415,8 @@ export class PortalComponent implements OnInit, OnDestroy {
         browsable: false//,
         // style: stopMarker
       });
-      tryBindStoreLayer(this.offlineRegionStore, offlineRegionsLayer);
-      tryAddLoadingStrategy(this.offlineRegionStore, new FeatureStoreLoadingStrategy({
+      tryBindStoreLayer(this.downloadState.regionStore, offlineRegionsLayer);
+      tryAddLoadingStrategy(this.downloadState.regionStore, new FeatureStoreLoadingStrategy({
         motion: FeatureMotion.None
       }));
 
@@ -846,7 +846,7 @@ export class PortalComponent implements OnInit, OnDestroy {
       if(tileGrid) {
         const coord = tileGrid.getTileCoordForCoordAndZ(mapCoord, z);
         //console.log({coord, templateUrl, tileGrid});
-        this.grid2feature(tileGrid,coord)
+        //this.grid2feature(tileGrid,coord)
         this.downloadState.addNewTileToDownload({coord, templateUrl, tileGrid});
       }
     })
