@@ -12,7 +12,6 @@ import { debounceTime, take, pairwise, skipWhile } from 'rxjs/operators';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MapBrowserPointerEvent as OlMapBrowserPointerEvent } from 'ol/MapBrowserEvent';
 import * as olProj from 'ol/proj';
-import { createFromTemplate } from 'ol/tileurlfunction.js'
 
 import {
   MediaService,
@@ -173,7 +172,6 @@ export class PortalComponent implements OnInit, OnDestroy {
 
   public offlineRegionStore: FeatureStore = new FeatureStore([], {map: this.map});
 
-  
   @ViewChild('mapBrowser', { read: ElementRef, static: true })
   mapBrowser: ElementRef;
   @ViewChild('searchBar', { read: ElementRef, static: true })
@@ -412,15 +410,12 @@ export class PortalComponent implements OnInit, OnDestroy {
           enabled: true,
         },
         exportable: true,
-        browsable: false//,
-        // style: stopMarker
+        browsable: false
       });
       tryBindStoreLayer(this.downloadState.regionStore, offlineRegionsLayer);
       tryAddLoadingStrategy(this.downloadState.regionStore, new FeatureStoreLoadingStrategy({
         motion: FeatureMotion.None
       }));
-
-
     });
 
     this.onSettingsChange$.subscribe(() => {
@@ -797,7 +792,6 @@ export class PortalComponent implements OnInit, OnDestroy {
   }
 
   private getClickCoordinate(event: { x: number; y: number }) {
-    
     const contextmenuPoint = event;
     const boundingMapBrowser = this.mapBrowser.nativeElement.getBoundingClientRect();
     contextmenuPoint.y =
@@ -823,81 +817,26 @@ export class PortalComponent implements OnInit, OnDestroy {
   }
 
   searchCoordinate(coord: [number, number]) {
-    //console.log(coord);
-    
     this.searchBarTerm = coord.map((c) => c.toFixed(6)).join(', ');
   }
 
   tileTodownload(clickCoord: [number, number]) {
-    // console.log(clickCoord);
     const proj = this.map.projection;
     const mapCoord = olProj.transform(clickCoord, 'EPSG:4326', proj);
-    // console.log(coord);
     const pixel = this.map.ol.getPixelFromCoordinate(mapCoord);
-    // console.log(pixel)
-    // console.log(this.map)
     this.map.ol.forEachLayerAtPixel(pixel, (layer, value) => {
       const igoLayer = this.map.getLayerByOlUId(layer.ol_uid);
-      if (!igoLayer  || !(igoLayer.dataSource instanceof XYZDataSource)){
+      if (!igoLayer || !(igoLayer.dataSource instanceof XYZDataSource)) {
         return;
       }
-      const templateUrl = igoLayer.dataSource.options.url
+      const templateUrl = igoLayer.dataSource.options.url;
       const tileGrid = layer.getSource().tileGrid;
       const z = this.map.viewController.getZoom();
-      if(tileGrid) {
+      if (tileGrid) {
         const coord = tileGrid.getTileCoordForCoordAndZ(mapCoord, z);
-        //console.log({coord, templateUrl, tileGrid});
-        //this.grid2feature(tileGrid,coord)
         this.downloadState.addNewTileToDownload({coord, templateUrl, tileGrid});
       }
-    })
-  }
-
-  grid2feature(tileGrid, coord) {
-    console.log(tileGrid.getTileCoordExtent(coord));
-
-    const id = uuid() // passe un id si tu veux
-    const previousRegion = this.offlineRegionStore.get(id);
-    const previousRegionRevision = previousRegion ? previousRegion.meta.revision : 0;
-
-    const polygonGeometry = fromExtent(tileGrid.getTileCoordExtent(coord));
-    const feature = new OlFeature(polygonGeometry);
-
-    console.log(polygonGeometry)
-    const projectionIn = 'EPSG:4326'
-    const projectionOut = 'EPSG:4326'
-
-    const featuresText: string = new olformat.GeoJSON().writeFeature(
-      feature,
-      {
-        dataProjection: projectionOut,
-        featureProjection: projectionIn,
-        featureType: 'feature',
-        featureNS: 'http://example.com/feature'
-      }
-    );
-    console.log(JSON.parse(featuresText).geometry)
-
-
-
-    const offlineRegionFeature: Feature = {
-      type: FEATURE,
-      geometry: JSON.parse(featuresText).geometry,
-      projection: this.map.projection,
-      properties: {
-        id:id,
-
-       // stopText,
-       // stopColor,
-        stopOpacity: 1
-      },
-      meta: {
-        id: id,
-        revision: previousRegionRevision + 1
-      },
-      ol: feature
-    };
-    this.offlineRegionStore.update(offlineRegionFeature);
+    });
   }
 
   updateMapBrowserClass() {
