@@ -754,6 +754,7 @@ export class PortalComponent implements OnInit, OnDestroy {
       this.downloadState.openedWithMouse = true;
     }
     this.tileTodownload(this.contextMenuCoord);
+    this.downloadState.rightMouseClick = true;
     this.toolbox.activateTool('download');
     this.openSidenav();
   }
