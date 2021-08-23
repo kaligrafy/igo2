@@ -416,6 +416,17 @@ export class PortalComponent implements OnInit, OnDestroy {
       tryAddLoadingStrategy(this.downloadState.regionStore, new FeatureStoreLoadingStrategy({
         motion: FeatureMotion.None
       }));
+      if (this.storageService.get('pwaInstalled') === 'accepted') {
+        this.messageService.info('Ouvrir l\'app dans le bouton a droite de l\'url', 'Application déja installée');
+      }
+
+      // event non reconnu ni declanche...
+     // window.addEventListener('appinstalled', () => {
+        // Hide the app-provided install promotion
+        // Clear the deferredPrompt so it can be garbage collected
+        // Optionally, send analytics event to indicate successful install
+       // console.log('PWA was installed');
+     // });
     });
 
     this.onSettingsChange$.subscribe(() => {
