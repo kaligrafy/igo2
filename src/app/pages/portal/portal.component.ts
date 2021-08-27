@@ -22,14 +22,25 @@ import {
 import {
   CapabilitiesService, computeOlFeaturesExtent, DataSourceService,
   Feature,
-  FEATURE, FeatureDataSource, featureFromOl, FeatureMotion, FeatureStore, FeatureStoreLoadingStrategy, featureToSearchResult, FeatureWorkspace,
+  FEATURE,
+  FeatureDataSource,
+  featureFromOl,
+  FeatureMotion,
+  FeatureStore, FeatureStoreLoadingStrategy, featureToSearchResult, FeatureWorkspace,
   generateIdFromSourceOptions, GoogleLinks, handleFileImportError,
   handleFileImportSuccess, IgoMap, ImportService, LayerService,
   MVTDataSource,
   QuerySearchSource, QueryService, Research,
   SearchResult,
   SearchSource,
-  SearchSourceService, sourceCanReverseSearch, sourceCanSearch, tryAddLoadingStrategy, tryBindStoreLayer, VectorLayer, WfsWorkspace, XYZDataSource
+  SearchSourceService,
+  sourceCanReverseSearch,
+  sourceCanSearch,
+  tryAddLoadingStrategy,
+  tryBindStoreLayer,
+  VectorLayer,
+  WfsWorkspace,
+  XYZDataSource
 } from '@igo2/geo';
 import {
   ContextState, DownloadState, MapState, QueryState, SearchState, ToolState, WorkspaceState
@@ -789,17 +800,17 @@ export class PortalComponent implements OnInit, OnDestroy {
       if (!igoLayer) {
         return;
       }
-      
+
       if (!igoLayer.visible) {
         return;
       }
-      
-      if (!(igoLayer.dataSource instanceof XYZDataSource) 
+
+      if (!(igoLayer.dataSource instanceof XYZDataSource)
         && !(igoLayer.dataSource instanceof MVTDataSource)
       ) {
         return;
       }
-      
+
       const templateUrl = igoLayer.dataSource.options.url;
       const tileGrid = igoLayer.ol.getSource().tileGrid;
       const z = this.map.viewController.getZoom();
