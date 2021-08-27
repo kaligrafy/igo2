@@ -784,16 +784,24 @@ export class PortalComponent implements OnInit, OnDestroy {
   tileTodownload(clickCoord: [number, number]) {
     const proj = this.map.projection;
     const mapCoord = olProj.transform(clickCoord, 'EPSG:4326', proj);
-    const pixel = this.map.ol.getPixelFromCoordinate(mapCoord);
-    this.map.ol.forEachLayerAtPixel(pixel, (layer, value) => {
-      const igoLayer = this.map.getLayerByOlUId(layer.ol_uid);
-      if (!igoLayer
-        || (!(igoLayer.dataSource instanceof XYZDataSource) && !(igoLayer.dataSource instanceof MVTDataSource))
+    const baselayers = this.map.getBaseLayers();
+    baselayers.forEach((igoLayer) => {
+      if (!igoLayer) {
+        return;
+      }
+      
+      if (!igoLayer.visible) {
+        return;
+      }
+      
+      if (!(igoLayer.dataSource instanceof XYZDataSource) 
+        && !(igoLayer.dataSource instanceof MVTDataSource)
       ) {
         return;
       }
+      
       const templateUrl = igoLayer.dataSource.options.url;
-      const tileGrid = layer.getSource().tileGrid;
+      const tileGrid = igoLayer.ol.getSource().tileGrid;
       const z = this.map.viewController.getZoom();
       if (tileGrid) {
         const coord = tileGrid.getTileCoordForCoordAndZ(mapCoord, z);
