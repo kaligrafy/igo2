@@ -1,109 +1,59 @@
+import { HttpClient } from '@angular/common/http';
 import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ChangeDetectorRef,
-  ViewChild,
-  ElementRef
+  ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild
 } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Subscription, of, BehaviorSubject } from 'rxjs';
-import { debounceTime, take, pairwise, skipWhile } from 'rxjs/operators';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MapBrowserPointerEvent as OlMapBrowserPointerEvent } from 'ol/MapBrowserEvent';
-import * as olProj from 'ol/proj';
-
+import { MatPaginator } from '@angular/material/paginator';
+import { ActivatedRoute, Params } from '@angular/router';
+import { AuthOptions, AuthService } from '@igo2/auth';
 import {
-  MediaService,
-  Media,
-  MediaOrientation,
+  ActionbarMode, ActionStore, EntityRecord, EntityStore, EntityTablePaginatorOptions, Tool,
+  // getEntityTitle,
+  Toolbox, Widget, Workspace,
+  WorkspaceStore
+} from '@igo2/common';
+import { DetailedContext } from '@igo2/context';
+import {
   ConfigService,
-  LanguageService,
-  MessageService,
+  LanguageService, Media,
+  MediaOrientation, MediaService, MessageService,
   StorageService
 } from '@igo2/core';
 import {
-  ActionbarMode,
-  Workspace,
-  WorkspaceStore,
-  ActionStore,
-  EntityStore,
-  // getEntityTitle,
-  Toolbox,
-  Tool,
-  Widget,
-  EntityTablePaginatorOptions,
-  EntityRecord
-} from '@igo2/common';
-import { AuthOptions, AuthService } from '@igo2/auth';
-import { DetailedContext } from '@igo2/context';
-import {
-  DataSourceService,
+  CapabilitiesService, computeOlFeaturesExtent, DataSourceService,
   Feature,
-  FEATURE,
-  featureToSearchResult,
-  GoogleLinks,
-  IgoMap,
-  LayerService,
-  QuerySearchSource,
-  Research,
+  FEATURE, FeatureDataSource, featureFromOl, FeatureMotion, FeatureStore, FeatureStoreLoadingStrategy, featureToSearchResult, FeatureWorkspace,
+  generateIdFromSourceOptions, GoogleLinks, handleFileImportError,
+  handleFileImportSuccess, IgoMap, ImportService, LayerService,
+  MVTDataSource,
+  QuerySearchSource, QueryService, Research,
   SearchResult,
   SearchSource,
-  SearchSourceService,
-  CapabilitiesService,
-  sourceCanSearch,
-  sourceCanReverseSearch,
-  ImportService,
-  handleFileImportError,
-  handleFileImportSuccess,
-  featureFromOl,
-  QueryService,
-  WfsWorkspace,
-  FeatureWorkspace,
-  generateIdFromSourceOptions,
-  computeOlFeaturesExtent,
-  XYZDataSource,
-  FeatureStore,
-  VectorLayer,
-  FeatureDataSource,
-  tryBindStoreLayer,
-  tryAddLoadingStrategy,
-  FeatureMotion,
-  FeatureStoreLoadingStrategy
+  SearchSourceService, sourceCanReverseSearch, sourceCanSearch, tryAddLoadingStrategy, tryBindStoreLayer, VectorLayer, WfsWorkspace, XYZDataSource
 } from '@igo2/geo';
-
 import {
-  ToolState,
-  MapState,
-  SearchState,
-  QueryState,
-  ContextState,
-  WorkspaceState,
-  DownloadToolComponent,
-  DownloadState
+  ContextState, DownloadState, MapState, QueryState, SearchState, ToolState, WorkspaceState
 } from '@igo2/integration';
-
+import { ObjectUtils } from '@igo2/utils';
+import olFormatGeoJSON from 'ol/format/GeoJSON';
+import { MapBrowserPointerEvent as OlMapBrowserPointerEvent } from 'ol/MapBrowserEvent';
+import * as olProj from 'ol/proj';
+import { BehaviorSubject, of, Subscription } from 'rxjs';
+import { debounceTime, pairwise, skipWhile, take } from 'rxjs/operators';
 import {
-  expansionPanelAnimation,
-  toastPanelAnimation,
   controlsAnimations,
   controlSlideX,
-  controlSlideY,
-  mapSlideX,
-  mapSlideY
+  controlSlideY, expansionPanelAnimation, mapSlideX,
+  mapSlideY, toastPanelAnimation
 } from './portal.animation';
-import { HttpClient } from '@angular/common/http';
-
 import { WelcomeWindowComponent } from './welcome-window/welcome-window.component';
 import { WelcomeWindowService } from './welcome-window/welcome-window.service';
-import { MatPaginator } from '@angular/material/paginator';
-import { ObjectUtils, uuid } from '@igo2/utils';
-import olFormatGeoJSON from 'ol/format/GeoJSON';
 
 
-import OlFeature from 'ol/Feature';
-import { fromExtent } from 'ol/geom/Polygon';
-import * as olformat from 'ol/format';
+
+
+
+
 
 @Component({
   selector: 'app-portal',
@@ -837,7 +787,9 @@ export class PortalComponent implements OnInit, OnDestroy {
     const pixel = this.map.ol.getPixelFromCoordinate(mapCoord);
     this.map.ol.forEachLayerAtPixel(pixel, (layer, value) => {
       const igoLayer = this.map.getLayerByOlUId(layer.ol_uid);
-      if (!igoLayer || !(igoLayer.dataSource instanceof XYZDataSource)) {
+      if (!igoLayer
+        || (!(igoLayer.dataSource instanceof XYZDataSource) && !(igoLayer.dataSource instanceof MVTDataSource))
+      ) {
         return;
       }
       const templateUrl = igoLayer.dataSource.options.url;
