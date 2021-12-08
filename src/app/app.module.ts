@@ -2,7 +2,6 @@ import { BrowserModule, HammerModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, Injector, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateService } from '@ngx-translate/core';
 import {
   provideConfigOptions,
   IgoMessageModule,
@@ -21,7 +20,8 @@ import {
   provideStoredQueriesSearchSource,
   provideOsrmDirectionsSource,
   provideOptionsApi,
-  provideCadastreSearchSource
+  provideCadastreSearchSource,
+  provideStyleListOptions
 } from '@igo2/geo';
 
 import { PwaService } from './services/pwa.service';
@@ -62,6 +62,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     provideOptionsApi(),
     provideCadastreSearchSource(),
     {provide: APP_INITIALIZER, useFactory: appInitializerFactory, deps: [LanguageService, PwaService, Injector], multi: true},
+    provideStyleListOptions({
+      path: './assets/list-style.json'
+    })
   ],
   bootstrap: [AppComponent]
 })
