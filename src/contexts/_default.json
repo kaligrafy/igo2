@@ -3,31 +3,124 @@
   "base": "_base",
   "layers": [
     {
-      "title": "MSP DESSERTE MUN 911",
+      "title": "Avertissements",
+      "zIndex": 99,
+      "id": "Evenement",
+      "legendOptions": { "url": "/Carte/Images/gm/b_Evenement.png" },
       "sourceOptions": {
-        "type": "wms",
-        "url": "https://geoegl.msp.gouv.qc.ca/apis/ws/igo_gouvouvert.fcgi",
-        "params": {
-          "layers": "MSP_DESSERTE_MUN_911",
-          "version": "1.3.0"
-        },
-        "queryable": false,
-        "queryFormat": "gml2",
-        "queryTitle": "Municipalite"
+        "type": "qc511",
+        "url": "/fr/Carte/Element.ashx?action=Evenement",
+        "queryable": true,
+        "queryTitle": "info",
+        "sourceFields": [
+          { "name": "info", "alias": "Informations" }
+        ]
       }
     },
     {
-      "title": "MSP Tel. Urgence",
+      "title": "Route blanche",
+      "zIndex": 97,
+      "id": "RouteBlanche",
+      "legendOptions": { "url": "/Carte/Images/gm/b_RouteBlanche.png" },
       "sourceOptions": {
-        "type": "wms",
-        "url": "https://geoegl.msp.gouv.qc.ca/apis/ws/igo_gouvouvert.fcgi",
-        "params": {
-          "layers": "telephone_urg",
-          "version": "1.3.0"
-        },
+        "type": "qc511",
+        "url": "/fr/Carte/Element.ashx?action=RouteBlanche",
         "queryable": true,
-        "queryFormat": "gml2",
-        "queryTitle": "desclocal"
+        "queryTitle": "info",
+        "sourceFields": [
+          { "name": "info", "alias": "Informations" }
+        ]
+      }
+    },
+    {
+      "title": "Entrave majeure",
+      "zIndex": 96,
+      "id": "Chantier.Majeur",
+      "legendOptions": { "url": "/Carte/Images/gm/b_entrave_rouge.png" },
+      "sourceOptions": {
+        "type": "qc511",
+        "url": "/fr/Carte/Element.ashx?action=Chantier.Majeur",
+        "queryable": true,
+        "queryTitle": "info",
+        "sourceFields": [
+          { "name": "info", "alias": "Informations" }
+        ]
+      }
+    },
+    {
+      "title": "Entrave mineure",
+      "zIndex": 96,
+      "id": "Chantier.Mineur",
+      "legendOptions": { "url": "/Carte/Images/gm/b_entrave_jaune.png" },
+      "sourceOptions": {
+        "type": "qc511",
+        "url": "/fr/Carte/Element.ashx?action=Chantier.Mineur",
+        "queryable": true,
+        "queryTitle": "info",
+        "sourceFields": [
+          { "name": "info", "alias": "Informations" }
+        ]
+      }
+    },
+    {
+      "title": "Entrave municipale",
+      "zIndex": 95,
+      "id": "ChantierMunicipal",
+      "metadata": {
+        "abstract": "Pour les municipalités participantes"
+      },
+      "legendOptions": { "url": "/Carte/Images/gm/b_ChantierMunicipal.png" },
+      "sourceOptions": {
+        "type": "qc511",
+        "url": "/fr/Carte/Element.ashx?action=ChantierMunicipal",
+        "queryable": true,
+        "queryTitle": "info",
+        "sourceFields": [
+          { "name": "info", "alias": "Informations" }
+        ]
+      }
+    },
+    {
+      "title": "Pont fédéral",
+      "zIndex": 94,
+      "id": "PontFederal",
+      "legendOptions": { "url": "/Carte/Images/gm/b_PontFederal.png" },
+      "sourceOptions": {
+        "type": "qc511",
+        "url": "/fr/Carte/Element.ashx?action=PontFederal",
+        "queryable": true,
+        "queryTitle": "info",
+        "sourceFields": [
+          { "name": "info", "alias": "Informations" }
+        ]
+      }
+    },
+    {
+      "title": "Traverse maritime",
+      "zIndex": 93,
+      "id": "Traversier",
+      "legendOptions": { "url": "/Carte/Images/gm/b_Traversier.png" },
+      "sourceOptions": {
+        "type": "qc511",
+        "url": "/fr/Carte/Element.ashx?action=Traversier",
+        "queryable": true,
+        "queryTitle": "info",
+        "sourceFields": [
+          { "name": "info", "alias": "Informations" }
+        ]
+      }
+    },
+
+    {
+      "title": "Poste frontalier",
+      "zIndex": 92,
+      "id": "PosteFrontalier",
+      "legendOptions": { "url": "/Carte/Images/gm/b_PosteFrontalier.png" },
+      "sourceOptions": {
+        "type": "qc511",
+        "url": "/fr/Carte/Element.ashx?action=PosteFrontalier",
+        "queryable": true,
+        "queryTitle": "info"
       }
     }
   ]

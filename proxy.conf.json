@@ -18,5 +18,15 @@
     "target": "https://ws.mapserver.transports.gouv.qc.ca",
     "secure": false,
     "changeOrigin": true
+  },
+  "/fr": {
+    "target": "https://www.quebec511.info",
+    "changeOrigin": true,
+    "secure": false
+  },
+  "/Carte": {
+    "target": "https://www.quebec511.info",
+    "changeOrigin": true,
+    "secure": false
   }
 }
