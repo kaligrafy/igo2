@@ -122,6 +122,20 @@
         "queryable": true,
         "queryTitle": "info"
       }
+    },
+    {
+      "title": "Établissements MTQ",
+      "sourceOptions": {
+        "type": "wms",
+        "url": "https://ws.mapserver.transports.gouv.qc.ca/swtq",
+        "params": {
+          "layers": "etablissement_mtq",
+          "version": "1.3.0"
+        },
+        "queryable": true,
+        "queryFormat": "htmlgml2",
+        "queryTitle": "nometablis"
+      }
     }
   ]
 }
