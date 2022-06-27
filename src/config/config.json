@@ -9,7 +9,13 @@
       "url": "/services/itineraire/route/v1/driving/"
     }
   },
+  "favoriteContext4NonAuthenticated": true,
   "theme": "blue-theme",
+  "header": {
+    "hasHeader": false,
+    "logo": "assets/images/signature-PIV.svg",
+    "logoPrint": "assets/images/signature-PIV.svg"
+  },
   "hasExpansionPanel": true,
   "hasGeolocateButton": true,
   "showRotationButtonIfNoRotation": false,

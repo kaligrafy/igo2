@@ -10,10 +10,11 @@ igo-spinner {
   position: absolute;
   top: $igo-margin;
   right: $igo-margin;
-  z-index: 5;
+  z-index: 100;
 }
 
 /*** Message-center ***/
 igo-message-center ::ng-deep simple-notifications ::ng-deep div.simple-notification-wrapper {
   right: 10px;
 }
+

@@ -245,7 +245,8 @@ Exemples
                                 "version": "1.0.0",
                                 "forcedProperties": [{
                                   "layerName": "BDTQ-20K_Allegee",
-                                  "title": "Nouveau nom pour cette couche WMTS"
+                                  "title": "Nouveau nom pour cette couche WMTS",
+                                  "metadataUrl": "New WMS Abstract"
                                 }]
                               },
                               {
@@ -254,7 +255,8 @@ Exemples
                                 "type": "wms",
                                 "forcedProperties": [{
                                   "layerName": "lieuhabite",
-                                  "title": "Nouveau nom pour cette couche WMS"
+                                  "title": "Nouveau nom pour cette couche WMS",
+                                  "metadataAbstract": "New WMS Abstract"
                                 }]
                               },
                               {
@@ -267,6 +269,30 @@ Exemples
                                   "title": "Nouveau nom pour cette couche Image ArcGIS REST"
                                 }]
                               },
+                              {
+                                  id: 'arcgisrestcatalogmaritime',
+                                  title: 'ArcGIS Rest Focus Maritime catalog',
+                                  url: 'https://gisp.dfo-mpo.gc.ca/arcgis/rest/services/CHS/ENC_MaritimeChartService/MapServer/exts/MaritimeChartService/MapServer',
+                                  type: 'arcgisrest',
+                                  forcedProperties: [
+                                    {
+                                      layerName: "*",
+                                      metadataAbstractAll: "New abstract to all layers"
+                                    }
+                                  ]
+                              },
+                              {
+                                  id: 'arcgisrestcatalog',
+                                  title: 'ArcGIS Rest Corals catalog',
+                                  url: 'https://gisp.dfo-mpo.gc.ca/arcgis/rest/services/FGP/CSAS_Corals_Sponges_2010_FR/MapServer',
+                                  type: 'arcgisrest',
+                                  forcedProperties: [
+                                    {
+                                      layerName: "*",
+                                      metadataUrlAll: "https://github.com/infra-geo-ouverte/igo2-lib/"
+                                    }
+                                  ]
+                              }
                        ]
                   },
                  ]
@@ -416,6 +442,16 @@ Exemples
 Liens
 
         - `igo2-lib/tree/master/packages/geo/src/lib/draw/draw <https://github.com/infra-geo-ouverte/igo2-lib/tree/master/packages/geo/src/lib/draw/draw>`_
+
+*****************
+favoriteContext4NonAuthenticated
+*****************
+
+    .. line-block::
+
+        Permet d'afficher ou non le bouton de contexte favori (contextManager)
+        pour les utilisateurs non authentifiés. Le contexte favori sera enregistré
+        dans le "LocalStorage" du fureteur.
 
 *****************
 hasExpansionPanel
@@ -1315,7 +1351,7 @@ Message
         Message affiché à l'ouverture du contexte ou à l'ouverture de la couche.
         - Une librairie tierce est utilisée pour l'affichage de message : `NGX-TOASTR  <https://www.npmjs.com/package/ngx-toastr>`_
         NB.: Les classes connues de l'application peuvent être utilisées. Des classes personalisées spécifiques aux messages peuvent être ajoutés.
-         `IGO2 styles.scss <https://github.com/infra-geo-ouverte/igo2/blob/master/src/styles.scss#L13>`_  
+         `IGO2 styles.scss <https://github.com/infra-geo-ouverte/igo2/blob/master/src/styles.scss#L13>`_
 
 Exemples
 
