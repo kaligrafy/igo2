@@ -1,4 +1,5 @@
 import { AuthOptions } from '@igo2/auth';
+import { DOMOptions } from '@igo2/common';
 import { AnalyticsOptions, LanguageOptions } from '@igo2/core';
 import {
   SearchSourceOptions,
@@ -23,6 +24,7 @@ interface Environment {
     projections?: Projection[];
     interactiveTour?: { activateInteractiveTour: boolean, tourInMobile: boolean; pathToConfigFile: string };
     depot?: { url: string; trainingGuides?: string[]; };
+    dom?: DOMOptions[];
     queryOverlayStyle?: {
       base?: CommonVectorStyleOptions,
       selection?: CommonVectorStyleOptions,
