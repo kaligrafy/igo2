@@ -10,8 +10,24 @@
     "disabled" : {
       "resolution": "The workspace is not available at this resolution",
       "visible": "The layer is not loaded. Try to set the layer visibility."
-    }
+    },
+    "addFeature": "Add entity to the edited layer"
   },
+  "header": {
+    "title": "IGO",
+    "language": "Français",
+    "contactUsUrl" : "https://www.igouverte.org/english/#footer",
+    "contactUs" : "Contact us"
+  },
+  "footer":{
+    "conditions": "Terms of use",
+    "url-conditions": "https://raw.githubusercontent.com/infra-geo-ouverte/igo2/master/LICENCE.txt",
+    "ministry": "Ministry name",
+    "url-ministry": "https://www.quebec.ca/government/ministry/",
+    "gov": "© Gouvernement du Québec, 2022",
+    "url-gov": "http://www.droitauteur.gouv.qc.ca/en/index.php"
+  },
+  "externallinks": "This link will open in a new window",
   "toastPanel": {
     "title": "Entities found on the map",
     "listButton": "Return to the list of entities",
@@ -30,11 +46,14 @@
     "previousFeatureTooltip": "Previous feature ( shortcut = left arrow)",
     "nextFeatureTooltip": "Next feature ( shortcut = right arrow)"
   },
+  "home-extent": {
+    "tooltip": "Go back to initial position"
+  },
   "IGO": "IGO",
   "noEntityStore": "No tables available for this dataset",
   "coordinates": "Show coordinates",
-  "googleMap": "Show in Google maps",
-  "googleStreetView": "Show in Google Street view",
+  "googleMap": "Show in Google Maps",
+  "googleStreetView": "Show in Google Street View",
   "welcomeWindow": {
     "html": "<h1>Welcome to {{title}, the Québec goverment mapping application </h1><h2>Version {{version}}, build on {{releaseDate}}</h2>",
     "title": "",
@@ -48,6 +67,8 @@
   "interactiveTour": {
     "global": {
       "title": "Interactive tour",
+      "advanced-map-tool-title": "ADVANCED TOOLS",
+      "advanced-map-tool": "Allows you to compare data layers and get map information.",
       "menu-button-title": "MENU",
       "menu-button": "Click on the menu button to open and close the main menu.",
       "search-bar-title": "SEARCH BAR",
@@ -90,6 +111,8 @@
       "home-button": "This button allow to get back to main menu",
       "geolocate-title": "GEOLOCATE",
       "geolocate": "To zoom the map to your location.",
+      "home-extent-title": "HOME EXTENT",
+      "home-extent-text": "To go to the home map extent",
       "user-title": "USER",
       "user-button": "To authenticate you or to disconnect and stay anonymous.",
       "baselayers-title": "BASELAYERS",
