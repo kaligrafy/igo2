@@ -32,6 +32,14 @@ import { AppComponent } from './app.component';
 import { HeaderModule } from './pages/header/header.module';
 import { FooterModule } from './pages/footer/footer.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipDefaultOptions } from '@angular/material/tooltip';
+
+export const defaultTooltipOptions: MatTooltipDefaultOptions = {
+  showDelay: 500,
+  hideDelay: 0,
+  touchendHideDelay: 0,
+  disableTooltipInteractivity: true
+};
 
 @NgModule({
   declarations: [AppComponent],
@@ -68,7 +76,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     {provide: APP_INITIALIZER, useFactory: appInitializerFactory, deps: [LanguageService, PwaService, Injector], multi: true},
     provideStyleListOptions({
       path: './assets/list-style.json'
-    })
+    }),
+    { provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: defaultTooltipOptions }
   ],
   bootstrap: [AppComponent]
 })
