@@ -4,7 +4,6 @@
 /src/locale/libs_locale
 
 # compiled output
-/dist
 /tmp
 /docs/_build
 # dependencies
