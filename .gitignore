@@ -8,6 +8,7 @@
 /docs/_build
 # dependencies
 /node_modules
+/dist/igo2
 
 
 # IDEs and editors
