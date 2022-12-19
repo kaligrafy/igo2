@@ -12,6 +12,7 @@ interface Environment {
   igo: {
     app: {
       forceCoordsNA: boolean;
+      promotePwa?: boolean;
     };
     catalog?: CatalogServiceOptions;
     importExport?: ImportExportServiceOptions;
@@ -97,9 +98,6 @@ export const environment: Environment = {
         params: {
           limit: '5'
         }
-      },
-      cadastre: {
-        enabled: false
       }
     },
     projections: [

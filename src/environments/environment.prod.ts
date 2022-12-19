@@ -8,7 +8,7 @@ import {
   CommonVectorStyleOptions
 } from '@igo2/geo';
 
-interface Environment {
+export interface Environment {
   production: boolean;
   igo: {
     app: {
@@ -80,9 +80,6 @@ export const environment: Environment = {
         params: {
           limit: '5'
         }
-      },
-      cadastre: {
-        available: false
       }
     },
     depot: {
