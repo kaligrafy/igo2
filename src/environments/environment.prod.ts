@@ -8,11 +8,15 @@ import {
   CommonVectorStyleOptions
 } from '@igo2/geo';
 
-interface Environment {
+export interface Environment {
   production: boolean;
   igo: {
     app: {
       forceCoordsNA: boolean;
+      pwa?: {
+        enabled?: boolean;
+        promote?: boolean;
+      }
     };
     importExport?: ImportExportServiceOptions;
     language?: LanguageOptions;
@@ -39,7 +43,11 @@ export const environment: Environment = {
   production: true,
   igo: {
     app: {
-      forceCoordsNA: true
+      forceCoordsNA: true,
+      pwa: {
+        enabled: false,
+        promote: false
+      }
     },
     importExport: {
       url: '/apis/ogre'
@@ -80,9 +88,6 @@ export const environment: Environment = {
         params: {
           limit: '5'
         }
-      },
-      cadastre: {
-        available: false
       }
     },
     depot: {

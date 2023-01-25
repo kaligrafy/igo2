@@ -1,3 +1,81 @@
+## [1.14.1](https://github.com/infra-geo-ouverte/igo2/compare/1.14.0...1.14.1) (2023-01-25)
+
+
+### Bug Fixes
+
+* **app:** fix angular/cli ([f25fd2e](https://github.com/infra-geo-ouverte/igo2/commit/f25fd2e3465425eb98a055889887c87ca853867e))
+* **gh-release:** github action for zipped build ([#895](https://github.com/infra-geo-ouverte/igo2/issues/895)) ([37da9ef](https://github.com/infra-geo-ouverte/igo2/commit/37da9eff660f854e68cec369b75402fb19319721))
+* **portal:** error on non pwa app on ngsw registration ([#897](https://github.com/infra-geo-ouverte/igo2/issues/897)) ([5bbdbef](https://github.com/infra-geo-ouverte/igo2/commit/5bbdbef626647a0d7646cd177a32181ac6f15acc))
+
+
+### Features
+
+* **app:** upgrade angular lts ([49106fb](https://github.com/infra-geo-ouverte/igo2/commit/49106fb978546730ba164d3223b0cdfc6a17888d))
+* **app:** upgrade igo2-lib ([a5358c4](https://github.com/infra-geo-ouverte/igo2/commit/a5358c467ea7bcffd1ee8c4a91fac810f83f2685))
+
+
+
+# [1.14.0](https://github.com/infra-geo-ouverte/igo2/compare/1.13.4...1.14.0) (2022-12-15)
+
+
+### Bug Fixes
+
+* **mat-form-field-suffix:** fix css icon size ([#873](https://github.com/infra-geo-ouverte/igo2/issues/873)) ([92fb147](https://github.com/infra-geo-ouverte/igo2/commit/92fb1472bd59cac5768d6043f45ab1aa477b6e4c))
+* **portal:** fix search sf params ([#877](https://github.com/infra-geo-ouverte/igo2/issues/877)) ([801bdf8](https://github.com/infra-geo-ouverte/igo2/commit/801bdf84730215c3238bedfb59cda11f22e7e680))
+
+
+### Features
+
+* **app:** allow force language by url param ([#881](https://github.com/infra-geo-ouverte/igo2/issues/881)) ([d2c341d](https://github.com/infra-geo-ouverte/igo2/commit/d2c341deceed336e7f17d6c522460bcba27a6cc0))
+* **app:** upgrade igo2-lib ([b9c176c](https://github.com/infra-geo-ouverte/igo2/commit/b9c176cf9f3821ee9eae00ae2ddde3e0ee0917b2))
+
+
+
+## [1.13.4](https://github.com/infra-geo-ouverte/igo2/compare/1.13.3...1.13.4) (2022-11-22)
+
+
+### Features
+
+* **app:** upgrade igo2-lib ([062ddfb](https://github.com/infra-geo-ouverte/igo2/commit/062ddfb769f3e70ceaf65d44b4ec592462105ccf))
+
+
+
+## [1.13.3](https://github.com/infra-geo-ouverte/igo2/compare/1.13.2...1.13.3) (2022-11-16)
+
+
+### Features
+
+* **app:** upgrade igo2-lib 1.13.3 ([483e219](https://github.com/infra-geo-ouverte/igo2/commit/483e21941ef4503052dc0f5d603695251399ee82))
+
+
+
+## [1.13.2](https://github.com/infra-geo-ouverte/igo2/compare/1.13.1...1.13.2) (2022-11-14)
+
+
+### Features
+
+* **app:** upgrade igo2-lib 1.13.2 ([1dcd962](https://github.com/infra-geo-ouverte/igo2/commit/1dcd96269e7e28cf64e1d84420a1f8e320228ff9))
+* **geoDB:** service to load data from config file into the indexed-db ([#847](https://github.com/infra-geo-ouverte/igo2/issues/847)) ([75e4d02](https://github.com/infra-geo-ouverte/igo2/commit/75e4d023bb3e30eb1369b8fef3836f5c26c26df8))
+* **map-browser:** add longpress directive ([#852](https://github.com/infra-geo-ouverte/igo2/issues/852)) ([8a3b5d6](https://github.com/infra-geo-ouverte/igo2/commit/8a3b5d604dafbc3a40a4d0f8e086f1f9470fad1f))
+
+
+
+## [1.13.1](https://github.com/infra-geo-ouverte/igo2/compare/1.13.0...1.13.1) (2022-11-07)
+
+
+### Bug Fixes
+
+* **header,spinner:** fixed header variables and spinner position ([#817](https://github.com/infra-geo-ouverte/igo2/issues/817)) ([1cc84e7](https://github.com/infra-geo-ouverte/igo2/commit/1cc84e73f0eacedbb65e44449f7f834ab80b4988))
+* url with version on share map link ([#837](https://github.com/infra-geo-ouverte/igo2/issues/837)) ([294c645](https://github.com/infra-geo-ouverte/igo2/commit/294c6458e9ac764cd5767bb1fd69e688330d97f2))
+
+
+### Features
+
+* **app:** upgrade igo2-lib ([8640dbf](https://github.com/infra-geo-ouverte/igo2/commit/8640dbf272fc61ae58e5177660540bbea7f5e8c0))
+* **geolocate:** add geolocate activateDefault config ([#814](https://github.com/infra-geo-ouverte/igo2/issues/814)) ([8020f42](https://github.com/infra-geo-ouverte/igo2/commit/8020f4248dbf87b635d4063e6d6d2c17bdd6b8d4))
+
+
+
 # [1.13.0](https://github.com/infra-geo-ouverte/igo2/compare/1.12.1...1.13.0) (2022-10-17)
 
 
