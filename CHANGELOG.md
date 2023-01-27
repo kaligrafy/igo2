@@ -1,3 +1,131 @@
+## [1.14.1](https://github.com/infra-geo-ouverte/igo2/compare/1.14.0...1.14.1) (2023-01-25)
+
+
+### Bug Fixes
+
+* **app:** fix angular/cli ([f25fd2e](https://github.com/infra-geo-ouverte/igo2/commit/f25fd2e3465425eb98a055889887c87ca853867e))
+* **gh-release:** github action for zipped build ([#895](https://github.com/infra-geo-ouverte/igo2/issues/895)) ([37da9ef](https://github.com/infra-geo-ouverte/igo2/commit/37da9eff660f854e68cec369b75402fb19319721))
+* **portal:** error on non pwa app on ngsw registration ([#897](https://github.com/infra-geo-ouverte/igo2/issues/897)) ([5bbdbef](https://github.com/infra-geo-ouverte/igo2/commit/5bbdbef626647a0d7646cd177a32181ac6f15acc))
+
+
+### Features
+
+* **app:** upgrade angular lts ([49106fb](https://github.com/infra-geo-ouverte/igo2/commit/49106fb978546730ba164d3223b0cdfc6a17888d))
+* **app:** upgrade igo2-lib ([a5358c4](https://github.com/infra-geo-ouverte/igo2/commit/a5358c467ea7bcffd1ee8c4a91fac810f83f2685))
+
+
+
+# [1.14.0](https://github.com/infra-geo-ouverte/igo2/compare/1.13.4...1.14.0) (2022-12-15)
+
+
+### Bug Fixes
+
+* **mat-form-field-suffix:** fix css icon size ([#873](https://github.com/infra-geo-ouverte/igo2/issues/873)) ([92fb147](https://github.com/infra-geo-ouverte/igo2/commit/92fb1472bd59cac5768d6043f45ab1aa477b6e4c))
+* **portal:** fix search sf params ([#877](https://github.com/infra-geo-ouverte/igo2/issues/877)) ([801bdf8](https://github.com/infra-geo-ouverte/igo2/commit/801bdf84730215c3238bedfb59cda11f22e7e680))
+
+
+### Features
+
+* **app:** allow force language by url param ([#881](https://github.com/infra-geo-ouverte/igo2/issues/881)) ([d2c341d](https://github.com/infra-geo-ouverte/igo2/commit/d2c341deceed336e7f17d6c522460bcba27a6cc0))
+* **app:** upgrade igo2-lib ([b9c176c](https://github.com/infra-geo-ouverte/igo2/commit/b9c176cf9f3821ee9eae00ae2ddde3e0ee0917b2))
+
+
+
+## [1.13.4](https://github.com/infra-geo-ouverte/igo2/compare/1.13.3...1.13.4) (2022-11-22)
+
+
+### Features
+
+* **app:** upgrade igo2-lib ([062ddfb](https://github.com/infra-geo-ouverte/igo2/commit/062ddfb769f3e70ceaf65d44b4ec592462105ccf))
+
+
+
+## [1.13.3](https://github.com/infra-geo-ouverte/igo2/compare/1.13.2...1.13.3) (2022-11-16)
+
+
+### Features
+
+* **app:** upgrade igo2-lib 1.13.3 ([483e219](https://github.com/infra-geo-ouverte/igo2/commit/483e21941ef4503052dc0f5d603695251399ee82))
+
+
+
+## [1.13.2](https://github.com/infra-geo-ouverte/igo2/compare/1.13.1...1.13.2) (2022-11-14)
+
+
+### Features
+
+* **app:** upgrade igo2-lib 1.13.2 ([1dcd962](https://github.com/infra-geo-ouverte/igo2/commit/1dcd96269e7e28cf64e1d84420a1f8e320228ff9))
+* **geoDB:** service to load data from config file into the indexed-db ([#847](https://github.com/infra-geo-ouverte/igo2/issues/847)) ([75e4d02](https://github.com/infra-geo-ouverte/igo2/commit/75e4d023bb3e30eb1369b8fef3836f5c26c26df8))
+* **map-browser:** add longpress directive ([#852](https://github.com/infra-geo-ouverte/igo2/issues/852)) ([8a3b5d6](https://github.com/infra-geo-ouverte/igo2/commit/8a3b5d604dafbc3a40a4d0f8e086f1f9470fad1f))
+
+
+
+## [1.13.1](https://github.com/infra-geo-ouverte/igo2/compare/1.13.0...1.13.1) (2022-11-07)
+
+
+### Bug Fixes
+
+* **header,spinner:** fixed header variables and spinner position ([#817](https://github.com/infra-geo-ouverte/igo2/issues/817)) ([1cc84e7](https://github.com/infra-geo-ouverte/igo2/commit/1cc84e73f0eacedbb65e44449f7f834ab80b4988))
+* url with version on share map link ([#837](https://github.com/infra-geo-ouverte/igo2/issues/837)) ([294c645](https://github.com/infra-geo-ouverte/igo2/commit/294c6458e9ac764cd5767bb1fd69e688330d97f2))
+
+
+### Features
+
+* **app:** upgrade igo2-lib ([8640dbf](https://github.com/infra-geo-ouverte/igo2/commit/8640dbf272fc61ae58e5177660540bbea7f5e8c0))
+* **geolocate:** add geolocate activateDefault config ([#814](https://github.com/infra-geo-ouverte/igo2/issues/814)) ([8020f42](https://github.com/infra-geo-ouverte/igo2/commit/8020f4248dbf87b635d4063e6d6d2c17bdd6b8d4))
+
+
+
+# [1.13.0](https://github.com/infra-geo-ouverte/igo2/compare/1.12.1...1.13.0) (2022-10-17)
+
+
+### Bug Fixes
+
+* **app:** fix tooltip interactivity ([#835](https://github.com/infra-geo-ouverte/igo2/issues/835)) ([47944a4](https://github.com/infra-geo-ouverte/igo2/commit/47944a4ff7a2c55dfa675b966ccd4b61322c6b43))
+* **demo:** new url and layer name for these 2 layers ([cea148f](https://github.com/infra-geo-ouverte/igo2/commit/cea148f1888c35c80a0507ded3bcadea20ac7877))
+* **dev-serve:** fix enabled cache on ng serve ([#832](https://github.com/infra-geo-ouverte/igo2/issues/832)) ([980ba93](https://github.com/infra-geo-ouverte/igo2/commit/980ba933d4247a0a1e564bfd80b606798376a88a))
+* **footer/header:** remove spec file ([3e03b13](https://github.com/infra-geo-ouverte/igo2/commit/3e03b13a41a304da0a2c5fea0dc349a20a5b32fb))
+* **readme:** fix 1.13.0 link ([3b6443e](https://github.com/infra-geo-ouverte/igo2/commit/3b6443eeae098407b3c98e39852452639c95230f))
+
+
+### Features
+
+* **app:** upgrade igo2-lib ([6263b3c](https://github.com/infra-geo-ouverte/igo2/commit/6263b3caa7884be3812388bb99aac17aefe72525))
+* **app:** upgrade libs + angular14 ([#824](https://github.com/infra-geo-ouverte/igo2/issues/824)) ([4c062af](https://github.com/infra-geo-ouverte/igo2/commit/4c062afbbe4e839be0bc6f1632e3dcf7079987d0))
+
+
+
+## [1.12.1](https://github.com/infra-geo-ouverte/igo2/compare/1.12.0...1.12.1) (2022-07-13)
+
+
+### Features
+
+* **app:** upgrade igo2-lib ([f96e179](https://github.com/infra-geo-ouverte/igo2/commit/f96e179ef2fab7b32c03031c2c18b92c0194d484))
+* **pages:** Footer ([#806](https://github.com/infra-geo-ouverte/igo2/issues/806)) ([ec97933](https://github.com/infra-geo-ouverte/igo2/commit/ec97933eebf15fd0c45bddec81c63cf972c76970))
+
+
+
+# [1.12.0](https://github.com/infra-geo-ouverte/igo2/compare/1.11.1...1.12.0) (2022-06-23)
+
+
+### Bug Fixes
+
+* **app:** upgrade igo2-lib 1.12.0 ([e6efda3](https://github.com/infra-geo-ouverte/igo2/commit/e6efda3b2212fdafe229c7370bd7b2973cb44bca))
+* **edition:** fix refresh of relation layers ([e73e677](https://github.com/infra-geo-ouverte/igo2/commit/e73e67775d52dc962ee41a16900d40eb68ddbe94))
+* **portal:** chrome 101 update app-expansion-panel z-index was set to 1 ([3cc2bf8](https://github.com/infra-geo-ouverte/igo2/commit/3cc2bf894be6e76ab2a5d24ded819558e2406b20))
+* **spinner:** fix ponctual spinner display problems ([#799](https://github.com/infra-geo-ouverte/igo2/issues/799)) ([44421de](https://github.com/infra-geo-ouverte/igo2/commit/44421de1c5d09914f37bd709cdcb31fddac8c567))
+
+
+### Features
+
+* **app:** upgrade igo2-lib 1.12.0 ([72069d5](https://github.com/infra-geo-ouverte/igo2/commit/72069d58c80e01297218ed32e45a96ae3a0a225f))
+* **edition:** add button is now configurable ([#784](https://github.com/infra-geo-ouverte/igo2/issues/784)) ([8c7d2e0](https://github.com/infra-geo-ouverte/igo2/commit/8c7d2e0c2c8454578473e923232dced6e71911c3))
+* favorite context for non authenticated user (local storage) ([#760](https://github.com/infra-geo-ouverte/igo2/issues/760)) ([29c5cb0](https://github.com/infra-geo-ouverte/igo2/commit/29c5cb0f9b86568278cea4544eb80a77f8dd63ce))
+* **ogc-filters:** ogc filters dom value  ([#774](https://github.com/infra-geo-ouverte/igo2/issues/774)) ([6ae5e79](https://github.com/infra-geo-ouverte/igo2/commit/6ae5e79df2ae9a0c23737a731a53cfba6a0d3b00))
+* **pages:** add Header ([#803](https://github.com/infra-geo-ouverte/igo2/issues/803)) ([b74b981](https://github.com/infra-geo-ouverte/igo2/commit/b74b981d09c449fa12c87baa27fb032a8f4249f3))
+
+
+
 ## [1.11.1](https://github.com/infra-geo-ouverte/igo2/compare/1.11.0...1.11.1) (2022-04-07)
 
 

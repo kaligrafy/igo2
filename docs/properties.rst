@@ -10,6 +10,18 @@ Géométrique
 .. _igomap:
 
 *****************************
+Entête (header)
+*****************************
+    .. line-block::
+
+        Entête comprenant un logo, un titre et un petit menu pour changer la langue et afficher le lien Nous joindre.
+        L'entête est optionnelle.
+        Les options de configuration sont dans src/config.json sous "header" :
+            "hasHeader": boolean (activer ou désactiver l'entête)
+            "logo": string (lien vers l'image du logo)
+            "logoPrint": string (lien vers l'image du logo pour impression, si nécessaire)
+
+*****************************
 Carte (map)
 *****************************
     .. line-block::
@@ -267,7 +279,6 @@ Exemples
             {"linkedLayers": {
                 "linkId": "wmsTimeFilterSrc",
                 "links": [{
-                            "bidirectionnal": true,
                             "linkedIds": ["wmsTimeFilterDest"],
                             "syncedDelete": true,
                             "properties": ["opacity","timeFilter","visible"]
@@ -328,7 +339,12 @@ Exemples
 
             {"sourceOptions": {
                   "attributions": "Droits d'auteurs que vous désirez afficher avec votre couche.",
-                  "crossOrigin": "anonymous"
+                  "crossOrigin": "anonymous",
+                  "download": {
+                    "url": "https://diffusion.mffp.gouv.qc.ca/Diffusion/DonneeGratuite/Foret/IMAGERIE/Mosaiques_Landsat/Mosaique_Sentinel_2021/",
+                    "extern": true,
+                    "allowedFormats": ["URL"]
+                  }
             }}
 
 
@@ -1270,6 +1286,40 @@ Exemple - filtre avec boutons spécifique à un groupe et calendrier (filtrage t
                   "stepDate": "P1D"
             }
 
+Exemple - groupe de filtre avec autocomplétion et domaine de valeurs (dom)
+
+        .. code:: json
+
+            {
+                "ogcFilters": {
+                    "enabled": true,
+                    "editable": true,
+                    "allowedOperatorsType": "All",
+                    "autocomplete": {
+                        "groups": [
+                            {"title": "Autocomplete","name": "1","ids": ["id1"]}
+                        ],
+                        "bundles": [
+                            {
+                                "id": "id1",
+                                "logical": "Or",
+                                "unfiltered": true,
+                                "title": "dom",
+                                "domSelectors": [
+                                    {
+                                        "id": 1
+                                        "name": "dom",
+                                        "operator": "PropertyIsEqualTo",
+                                        "propertyName": "typeAppareil"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+
+            }
+
 Propriétés de ogcFilters
 
     .. tabularcolumns:: |p{1cm}|p{2cm}|p{7cm}|p{2cm}|p{2cm}|
@@ -1460,7 +1510,6 @@ Source (base commune)
         Elles seront présentées dans les sections dédiées aux sources.
 
         Les sources disponible sont:
-            - `Cadastre`_
             - `Coordonnées`_
             - `iCherche`_ (Québec)
             - `iCherche Reverse`_ - par coordonnées (Québec)
@@ -1494,36 +1543,6 @@ Liens
 
     - `igo2-lib/packages/geo/src/lib/search/shared/sources/source.interfaces.ts <https://github.com/infra-geo-ouverte/igo2-lib/blob/master/packages/geo/src/lib/search/shared/sources/source.interfaces.ts>`__
 
-
-Cadastre
-===============
-
-    .. line-block::
-
-        Le service de recherches de lots rénovés du Québec.
-        Le résultat de la recherche est la géométrie du lot rénové.
-        ** Pour fonctionner l'application doit avoir accès au service CPTAQ (sécurité, CORS)
-
-Exemples
-
-    .. code:: json
-
-        {"cadastre": {
-            "searchUrl": "https://carto.cptaq.gouv.qc.ca/php/find_lot_v1.php?"
-        }}
-
-Propriétés
-
-    Seulement les propriétés spécifiques à ce service sont présentées.
-
-    .. tabularcolumns:: |p{1cm}|p{2cm}|p{7cm}|p{2cm}|
-            
-    .. csv-table::
-       :file: _tables/fr/properties/search/cadastre.csv
-       :header-rows: 1
-       :widths: 10 10 30 15
-
-    Pour les autres propriétés, référez-vous à `Source (base commune)`_ .
 
 Coordonnées
 ===============
@@ -2417,7 +2436,7 @@ importExport
           - Les shapeFiles doivent être dans un .zip
 
         Export:
-          - Seulement les couches en WFS peuvent être exportées.
+          - Seulement les couches en WFS peuvent être exportées, les couches WMS ne sont pas exportable.
 
 
 Exemples
@@ -2451,8 +2470,11 @@ Exemples
 
     .. line-block::
 
-        Outil permettant d'exporter certaines couches d'informations.
-        Noter que les couches WMS ne sont pas exportable.
+        Noter que des précisions peuvent etre ajoutées dans l'interface pour guider l'utilisateur. Ceci à l'aide des traductions disponibles:
+        Import: liste= importTabTitle, importClarifications, importSizeMax, importFormatAuthorized, importShpZip, importHtmlClarifications
+                ou plutot que la liste, vous pouvez définir du html personnalisé avec la balise importHtmlClarifications
+        Export: Définir du html personnalisé avec la balise exportHtmlClarifications.
+         - `Fichier traduction en.json <https://github.com/infra-geo-ouverte/igo2-lib/blob/master/packages/geo/src/locale/en.geo.json#L135>`__
 
 Propriétés
 

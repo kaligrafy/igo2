@@ -1,5 +1,6 @@
 @import 'style/reset.scss';
 @import 'style/theme.scss';
+//@import './qcca-theme/qcca-theme.scss';
 
 .shepherd-element[data-popper-reference-hidden]:not(.shepherd-centered) {
   opacity: 1;
@@ -28,4 +29,19 @@ app-root {
   height: 100%;
   position: absolute;
   overflow-y: auto;
+}
+
+.toast-message-ul-pad-inline-start-9prc {
+  padding-inline-start: 9%;
+}
+
+.toast-message-a-blue {
+  color: blue !important;
+  text-decoration: underline;
+  text-decoration-color: blue;
+}
+
+.toast-message-a-blue:hover {
+  text-decoration: underline !important;
+
 }

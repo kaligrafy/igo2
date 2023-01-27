@@ -11,10 +11,6 @@
   },
   "favoriteContext4NonAuthenticated": true,
   "theme": "blue-theme",
-  "hasExpansionPanel": false,
-  "hasGeolocateButton": true,
-  "showRotationButtonIfNoRotation": false,
-  "showMenuButton": false,
   "showSearchBar": false,
   "simpleFilters": [
     {"type": "regadmin", "description": "Région administrative"},
@@ -41,15 +37,34 @@
       "showPreviousNextPageButtons": true
     }
   },
-  "hasFeatureEmphasisOnSelection": false,
-  "menuButtonReverseColor": false,
   "searchSources": {
     "cadastre": {
       "available": false
     }
   },
+  "header": {
+    "hasHeader": false,
+    "logo": "assets/images/signature-PIV.svg",
+    "logoPrint": "assets/images/signature-PIV.svg"
+  },
+  "hasFooter": false,
+  "hasExpansionPanel": true,
+  "hasGeolocateButton": true,
+  "showRotationButtonIfNoRotation": false,
+  "showMenuButton": true,
+  "searchBar": {
+    "showSearchBar": true,
+    "showSearchButton": false
+  },
+  "hasFeatureEmphasisOnSelection": true,
+  "menuButtonReverseColor": false,
+  "homeExtentButton": {
+    "homeExtButtonExtent":[-9000000, 5790000,-7500000, 6770000],
+    "homeExtButtonCenter": [-71.938087, 48.446975],
+    "homeExtButtonZoom" : 6
+  },
   "title": "IGO",
   "edition": {
-    "url": "/apis/postgrest/"
+    "url": "/apis/inedit/"
   }
 }

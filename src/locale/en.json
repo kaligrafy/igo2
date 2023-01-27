@@ -13,6 +13,21 @@
     },
     "addFeature": "Add entity to the edited layer"
   },
+  "header": {
+    "title": "IGO",
+    "language": "Français",
+    "contactUsUrl" : "https://www.igouverte.org/english/#footer",
+    "contactUs" : "Contact us"
+  },
+  "footer":{
+    "conditions": "Terms of use",
+    "url-conditions": "https://raw.githubusercontent.com/infra-geo-ouverte/igo2/master/LICENCE.txt",
+    "ministry": "Ministry name",
+    "url-ministry": "https://www.quebec.ca/government/ministry/",
+    "gov": "© Gouvernement du Québec, 2022",
+    "url-gov": "http://www.droitauteur.gouv.qc.ca/en/index.php"
+  },
+  "externallinks": "This link will open in a new window",
   "toastPanel": {
     "title": "Entities found on the map",
     "listButton": "Return to the list of entities",
@@ -40,8 +55,8 @@
   "googleMap": "Show in Google Maps",
   "googleStreetView": "Show in Google Street View",
   "welcomeWindow": {
-    "html": "<h1>Welcome to {{title}, the Québec goverment mapping application </h1><h2>Version {{version}}, build on {{releaseDate}}</h2>",
-    "title": "",
+    "html": "<h1>Welcome to {{title}}, the Québec government mapping application </h1><h2>Version {{version}}, build on {{releaseDate}}</h2>",
+    "title": "Home window",
     "closeButton": "Close",
     "notShowCheck": "Do not show again"
   },
@@ -52,6 +67,8 @@
   "interactiveTour": {
     "global": {
       "title": "Interactive tour",
+      "advanced-map-tool-title": "ADVANCED TOOLS",
+      "advanced-map-tool": "Allows you to compare data layers and get map information.",
       "menu-button-title": "MENU",
       "menu-button": "Click on the menu button to open and close the main menu.",
       "search-bar-title": "SEARCH BAR",
@@ -226,8 +243,16 @@
     "legend-tab-description": "This tab can be used to display all layer's legend. By default, only visible layers at active scale will have their legend displayed.",
     "legend-tab-all": "Allow to also display non visible layer's legend at active scale."
   },
+  "pwa": {
+    "new-version-title": "New version available. ",
+    "new-version": "Do you want to reload the app?",
+    "data-download-start": "Downloading data for offline use. Please don't leave the current app.",
+    "data-download-completed": "Offline data download completed"
+
+  },
   "messages": {
-    "title": "Title from a translation",
-    "message": "Message from a translation - <div class='toast-message-green-div'>Message at the context level </div>Open the layer 'MSP Tel. Urgence' to see messages at the layer level."
+    "title": "Title from a translation.",
+    "message": "Message from a translation - no icon - <div class='toast-message-green-div'>Message at the context level </div>Open the layer 'MSP Tel. Urgence' to see messages at the layer level. {{content}}",
+    "content": "Dynamic content can also be added to the message"
   }
 }

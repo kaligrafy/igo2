@@ -12,6 +12,10 @@ interface Environment {
   igo: {
     app: {
       forceCoordsNA: boolean;
+      pwa?: {
+        enabled?: boolean;
+        promote?: boolean;
+      }
     };
     catalog?: CatalogServiceOptions;
     importExport?: ImportExportServiceOptions;
@@ -37,7 +41,11 @@ export const environment: Environment = {
   production: true,
   igo: {
     app: {
-      forceCoordsNA: false
+      forceCoordsNA: false,
+      pwa: {
+        enabled: false,
+        promote: false
+      }
     },
     catalog: {
       sources: [
@@ -58,7 +66,8 @@ export const environment: Environment = {
       url: '/apis/depot'
     },
     importExport: {
-      url: 'https://geoegl.msp.gouv.qc.ca/apis/ogre'
+      url: 'https://geoegl.msp.gouv.qc.ca/apis/ogre',
+      configFileToGeoDBService: './data/geoDataToIDB.json'
     },
     language: {
       prefix: './locale/'
@@ -96,9 +105,6 @@ export const environment: Environment = {
         params: {
           limit: '5'
         }
-      },
-      cadastre: {
-        enabled: false
       }
     },
     projections: [

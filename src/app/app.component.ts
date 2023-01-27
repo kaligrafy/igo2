@@ -2,16 +2,15 @@ import { Component, Renderer2 } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
 import { zip } from 'rxjs';
 import { map } from 'rxjs/operators';
-
 import { userAgent } from '@igo2/utils';
 import {
   LanguageService,
   ConfigService,
-  AnalyticsService,
   MessageService
 } from '@igo2/core';
 import { AuthOptions } from '@igo2/auth';
 import { AnalyticsListenerService } from '@igo2/integration';
+import { PwaService } from './services/pwa.service';
 
 @Component({
   selector: 'app-root',
@@ -21,18 +20,21 @@ import { AnalyticsListenerService } from '@igo2/integration';
 export class AppComponent {
   public authConfig: AuthOptions;
   private themeClass = 'blue-theme';
+  public hasHeader = true;
+  public hasFooter = true;
 
   constructor(
     protected languageService: LanguageService,
     private configService: ConfigService,
-    private analyticsService: AnalyticsService,
     private analyticsListenerService: AnalyticsListenerService,
     private renderer: Renderer2,
     private titleService: Title,
     private metaService: Meta,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private pwaService: PwaService
   ) {
-   this.languageService.translate.getTranslation(this.languageService.getLanguage()).subscribe();
+    this.pwaService.checkForUpdates();
+    this.languageService.translate.getTranslation(this.languageService.getLanguage()).subscribe();
 
     this.authConfig = this.configService.getConfig('auth');
 
@@ -43,6 +45,12 @@ export class AppComponent {
     this.analyticsListenerService.listen();
 
     this.detectOldBrowser();
+
+    this.hasHeader = this.configService.getConfig('header.hasHeader') === undefined ? false :
+    this.configService.getConfig('header.hasHeader');
+
+    this.hasFooter = this.configService.getConfig('hasFooter') === undefined ? false :
+    this.configService.getConfig('hasFooter');
   }
 
   private readTitleConfig() {
