@@ -71,7 +71,9 @@ import {
   GeoDBService,
   ImageLayer,
   VectorLayer,
-  MapExtent
+  MapExtent,
+  moveToOlFeatures,
+  FeatureMotion
 } from '@igo2/geo';
 
 import {
@@ -240,6 +242,11 @@ export class PortalComponent implements OnInit, OnDestroy {
   }
   set expansionPanelExpanded(value: boolean) {
     this.workspaceState.workspacePanelExpanded = value;
+    if (value === true) {
+      this.map.viewController.setPadding({bottom: 280});
+    } else {
+      this.map.viewController.setPadding({bottom: 0});
+    }
   }
 
   get toastPanelShown(): boolean {
@@ -302,6 +309,7 @@ export class PortalComponent implements OnInit, OnDestroy {
   get workspace(): Workspace {
     return this.workspaceState.workspace$.value;
   }
+
 
   constructor(
     private ngxIndexedDBService: NgxIndexedDBService,
@@ -370,23 +378,23 @@ export class PortalComponent implements OnInit, OnDestroy {
       (context: DetailedContext) => this.onChangeContext(context)
     );
 
-    this.contextMenuStore.load([
-      {
-        id: 'coordinates',
-        title: 'coordinates',
-        handler: () => this.searchCoordinate(this.contextMenuCoord)
-      },
-      {
-        id: 'googleMaps',
-        title: 'googleMap',
-        handler: () => this.openGoogleMaps(this.contextMenuCoord)
-      },
-      {
-        id: 'googleStreetView',
-        title: 'googleStreetView',
-        handler: () => this.openGoogleStreetView(this.contextMenuCoord)
-      }
-    ]);
+    const contextActions = [{
+      id: 'coordinates',
+      title: 'coordinates',
+      handler: () => this.searchCoordinate(this.contextMenuCoord)
+    },
+    {
+      id: 'googleMaps',
+      title: 'googleMap',
+      handler: () => this.openGoogleMaps(this.contextMenuCoord)
+    },
+    {
+      id: 'googleStreetView',
+      title: 'googleStreetView',
+      handler: () => this.openGoogleStreetView(this.contextMenuCoord)
+    }];
+
+    this.contextMenuStore.load(contextActions);
 
     this.queryStore.count$
       .pipe(pairwise())
@@ -885,6 +893,9 @@ ${rtss.properties.distance} m`;
     this.cancelOngoingAddLayer();
     if (context === undefined) {
       return;
+    }
+    if (this.workspace && !this.workspace.entityStore.empty) {
+      this.workspace.entityStore.clear();
     }
     if (!this.queryState.store.empty) {
       this.queryState.store.softClear();
@@ -1630,7 +1641,7 @@ ${rtss.properties.distance} m`;
         relationWorkspace?.meta.tableTemplate.columns.forEach(col => {
           // Update domain list
           if (col.type === 'list' || col.type === 'autocomplete') {
-            this.editionWorkspaceService.getDomainValues(col.relation.table).subscribe(result => {
+            this.editionWorkspaceService.getDomainValues(col.relation).subscribe(result => {
               col.domainValues = result;
             });
           }
@@ -1638,4 +1649,23 @@ ${rtss.properties.distance} m`;
       }
     }
   }
+
+  zoomToSelectedFeatureWks() {
+    let format = new olFormatGeoJSON();
+    const featuresSelected = this.workspaceState.workspaceSelection.map(rec => (rec.entity as Feature));
+    if (featuresSelected.length === 0) {
+      return;
+    }
+    const olFeaturesSelected = [];
+    for (const feat of featuresSelected) {
+      let localOlFeature = format.readFeature(feat,
+        {
+          dataProjection: feat.projection,
+          featureProjection: this.map.projection
+        });
+        olFeaturesSelected.push(localOlFeature);
+    }
+    moveToOlFeatures(this.map, olFeaturesSelected, FeatureMotion.Zoom);
+  }
+
 }

@@ -19,6 +19,12 @@
   "favoriteContext4NonAuthenticated": true,
   "wakeLockApiButton": true,
   "theme": "blue-theme",
+  "header": {
+    "hasHeader": false,
+    "logo": "assets/images/signature-PIV.svg",
+    "logoPrint": "assets/images/signature-PIV.svg"
+  },
+  "hasFooter": false,
   "hasExpansionPanel": true,
   "hasGeolocateButton": true,
   "showRotationButtonIfNoRotation": false,
