@@ -1,9 +1,4 @@
 {
-  "routingSources": {
-    "osrm": {
-      "enabled": true
-    }
-  },
   "directionsSources": {
     "osrm": {
       "url": "https://geoegl.msp.gouv.qc.ca/services/itineraire/route/v1/driving/"
