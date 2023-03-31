@@ -9,9 +9,6 @@
       "url": "https://geoegl.msp.gouv.qc.ca/services/itineraire/route/v1/driving/"
     }
   },
-  "storage": {
-    "key": "sigo-terrain"
-  },
   "favoriteContext4NonAuthenticated": true,
   "theme": "blue-theme",
   "header": {
