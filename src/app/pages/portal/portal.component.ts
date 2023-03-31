@@ -73,7 +73,8 @@ import {
   VectorLayer,
   MapExtent,
   moveToOlFeatures,
-  FeatureMotion
+  FeatureMotion,
+  ConfigFileToGeoDBService
 } from '@igo2/geo';
 
 import {
@@ -130,6 +131,8 @@ export class PortalComponent implements OnInit, OnDestroy {
   public hasHomeExtentButton = false;
   public showMenuButton = true;
   public showSearchBar = true;
+  public showOfflineButton = false;
+  public showWakeLockButton = false;
   public showRotationButtonIfNoRotation = false;
   public hasFeatureEmphasisOnSelection: Boolean = false;
   public workspaceNotAvailableMessage: String = 'workspace.disabled.resolution';
@@ -167,6 +170,7 @@ export class PortalComponent implements OnInit, OnDestroy {
   private sidenavMediaAndOrientation$$: Subscription;
 
   public igoSearchPointerSummaryEnabled: boolean;
+  public igoReverseSearchCoordsFormatEnabled: boolean;
 
   public toastPanelForExpansionOpened = true;
   private activeWidget$$: Subscription;
@@ -310,9 +314,7 @@ export class PortalComponent implements OnInit, OnDestroy {
     return this.workspaceState.workspace$.value;
   }
 
-
   constructor(
-    private ngxIndexedDBService: NgxIndexedDBService,
     private route: ActivatedRoute,
     public workspaceState: WorkspaceState,
     public authService: AuthService,
@@ -340,8 +342,7 @@ export class PortalComponent implements OnInit, OnDestroy {
     private directionState: DirectionState,
     private mapRtssProximityState: MapRtssProximityState,
     private mapProximityState: MapProximityState,
-    private geoDBService: GeoDBService,
-    private pwaService: PwaService
+    private configFileToGeoDBService: ConfigFileToGeoDBService
   ) {
     this.hasExpansionPanel = this.configService.getConfig('hasExpansionPanel');
     this.hasHomeExtentButton =
@@ -352,8 +353,13 @@ export class PortalComponent implements OnInit, OnDestroy {
       this.configService.getConfig('showRotationButtonIfNoRotation');
     this.showMenuButton = this.configService.getConfig('showMenuButton') === undefined ? true :
       this.configService.getConfig('showMenuButton');
-    this.showSearchBar = this.configService.getConfig('showSearchBar') === undefined ? true :
-      this.configService.getConfig('showSearchBar');
+    this.showSearchBar = this.configService.getConfig('searchBar.showSearchBar') === undefined ? true :
+      this.configService.getConfig('searchBar.showSearchBar');
+    this.showOfflineButton = this.configService.getConfig('offlineButton') === undefined ? false :
+      this.configService.getConfig('offlineButton');
+    this.showWakeLockButton = this.configService.getConfig('wakeLockApiButton') === undefined ? false :
+      this.configService.getConfig('wakeLockApiButton');
+
     this.forceCoordsNA = this.configService.getConfig('app.forceCoordsNA');
     this.hasFeatureEmphasisOnSelection = this.configService.getConfig('hasFeatureEmphasisOnSelection');
 
@@ -362,6 +368,8 @@ export class PortalComponent implements OnInit, OnDestroy {
     if (this.igoSearchPointerSummaryEnabled === undefined) {
       this.igoSearchPointerSummaryEnabled = this.storageService.get('searchPointerSummaryEnabled') as boolean || false;
     }
+
+    this.igoReverseSearchCoordsFormatEnabled = this.storageService.get('reverseSearchCoordsFormatEnabled') as boolean || false;
   }
 
   ngOnInit() {
@@ -369,6 +377,10 @@ export class PortalComponent implements OnInit, OnDestroy {
     this.searchState.searchTermSplitter$.next(this.termSplitter);
 
     this.initWelcomeWindow();
+
+    this.route.queryParams.subscribe((params) => {
+      this.readLanguageParam(params);
+    });
 
     this.authService.authenticate$.subscribe((authenticated) => {
       this.contextLoaded = false;
@@ -414,6 +426,9 @@ export class PortalComponent implements OnInit, OnDestroy {
       });
     this.map.ol.once('rendercomplete', () => {
       this.readQueryParams();
+      if (this.configService.getConfig('geolocate.activateDefault') !== undefined) {
+        this.map.geolocationController.tracking = this.configService.getConfig('geolocate.activateDefault');
+      }
     });
 
     this.onSettingsChange$.subscribe(() => {
@@ -498,25 +513,36 @@ export class PortalComponent implements OnInit, OnDestroy {
       ).subscribe((sidenavMediaAndOrientation: [boolean, string, string]) => {
         this.computeToastPanelOffsetX();
       });
-      this.initSW();
-      this.mapRtssProximityState.currentRTSSCh$.subscribe(rtss => {
-        if (rtss) {
-          this.mapProximityState.proximityFeatureStore.delete(rtss);
-          this.mapProximityState.proximityFeatureStore.insert(rtss);
-          const route = rtss.properties.num_rts.substring(0,5);
-          const tronc = rtss.properties.num_rts.substring(5,7);
-          const sect = rtss.properties.num_rts.substring(7,10);
-          const srte = rtss.properties.num_rts.substring(10,14);
-          const chainage = rtss.properties.chainage;
-          const thousand = Math.floor(chainage/1000);
-          const units = this.padWithZero(chainage%1000,3);
-          this.infoContent = `${route}-${tronc}-${sect}-${srte}
+
+    if (this.configService.getConfig('importExport')) {
+      const configFileToGeoDBService = this.configService.getConfig('importExport.configFileToGeoDBService');
+      if (configFileToGeoDBService) {
+        this.configFileToGeoDBService.load(configFileToGeoDBService);
+      }
+    }
+
+    this.handleSIGOTerrain();
+  }
+
+  handleSIGOTerrain() {
+    this.mapRtssProximityState.currentRTSSCh$.subscribe(rtss => {
+      if (rtss) {
+        this.mapProximityState.proximityFeatureStore.delete(rtss);
+        this.mapProximityState.proximityFeatureStore.insert(rtss);
+        const route = rtss.properties.num_rts.substring(0, 5);
+        const tronc = rtss.properties.num_rts.substring(5, 7);
+        const sect = rtss.properties.num_rts.substring(7, 10);
+        const srte = rtss.properties.num_rts.substring(10, 14);
+        const chainage = rtss.properties.chainage;
+        const thousand = Math.floor(chainage / 1000);
+        const units = this.padWithZero(chainage % 1000, 3);
+        this.infoContent = `${route}-${tronc}-${sect}-${srte}
 ${thousand}+${units}
 ${rtss.properties.distance} m`;
-        } else {
-          this.infoContent = undefined;
-        }
-      });
+      } else {
+        this.infoContent = undefined;
+      }
+    });
 
     if (this.storageService.get('favorite.context.uri')) {
       this.toolbox.activateTool("map-rtss-proximity");
@@ -525,104 +551,6 @@ ${rtss.properties.distance} m`;
 
   padWithZero(num, targetLength) {
     return String(num).padStart(targetLength, '0');
-  }
-
-  private initSW() {
-    // todo delete dgt81-91 files
-    const oldUrlBase = "https://ws.mapserver.transports.gouv.qc.ca/donnees/geomatique/sigo-terrain";
-    const urlBase = "/igo2/sigo-terrain/data";
-    const dgts = [
-      "Aeroportuaire", "DGT29", "DGT63-65", "DGT64-70",
-      "DGT66", "DGT67", "DGT68", "DGT71", "DGT91", "DGT93", "DGT86", "DGT88", "DGT89", "DGT90"
-    ];
-    const ds = ["rtss", "gsq", "pon", "cs", "mun"];
-    const oldDataList = [];
-    const dataList = [];
-    dgts.map(dgt => {
-      ds.map(d => {
-        oldDataList.push(`${oldUrlBase}/${dgt}/${d}.geojson`);
-        dataList.push(`${urlBase}/${dgt}/${d}.geojson`);
-      });
-    });
-
-    const dataDownload = this.configService.getConfig('pwa.dataDownload');
-    if ('serviceWorker' in navigator && dataDownload) {
-      let downloadMessage;
-      let currentVersion;
-      const dataLoadSource = this.storageService.get('dataLoadSource');
-      navigator.serviceWorker.ready.then((registration) => {
-        console.log('Service Worker Ready');
-        this.http.get('ngsw.json').pipe(
-          concatMap((ngsw: any) => {
-            const datas$ = [];
-            let hasDataInDataDir: boolean = false;
-            if (ngsw) {
-              // IF FILE NOT IN THIS LIST... DELETE?
-              currentVersion = ngsw.appData.version;
-              const cachedDataVersion = this.storageService.get('cachedDataVersion');
-              if (currentVersion !== cachedDataVersion && dataLoadSource === 'pending' ) {
-                this.pwaService.updates.checkForUpdate();
-              }
-              if (dataLoadSource === 'newVersion' || !dataLoadSource) {
-                ((ngsw as any).assetGroups as any).map((assetGroup) => {
-                  if (assetGroup.name === 'contexts') {
-                    if (assetGroup.name === 'data') { // pas necessaire
-                      hasDataInDataDir = assetGroup.urls.concat(assetGroup.files).length > 0;
-                    }
-                    const elemToDownload = assetGroup.urls.concat(assetGroup.files).filter(f => f);
-                    elemToDownload.map((url,i) => datas$.push(this.http.get(url).pipe(delay(750))));
-                  }
-                });
-                if (hasDataInDataDir) {
-                  const message = this.languageService.translate.instant('pwa.data-download-start');
-                  downloadMessage = this.messageService
-                    .info(message, undefined, { disableTimeOut: true, progressBar: false, closeButton: true, tapToDismiss: false });
-                }
-                return zip(...datas$);
-              }
-
-            }
-            return zip(...datas$);
-          }),
-          delay(dataLoadSource ? 0 : 14000),
-          concatMap((datas) => {
-            if (datas.length > 0 && dataList.length > 0) {
-              const message = this.languageService.translate.instant('pwa.data-download-start');
-              downloadMessage = this.messageService
-                .info(message, undefined, { disableTimeOut: true, progressBar: false, closeButton: true, tapToDismiss: false });
-              const datas2$ = [];
-
-              oldDataList.map((url,i) => datas2$.push(
-                    this.ngxIndexedDBService.deleteByKey('geoData', url)
-                ));
-
-              dataList.map((url,i) => datas2$.push(
-                this.http.get(url).pipe(
-                  concatMap(r => {
-                    return this.geoDBService.update(url, i, r, 'system' as any, 'automatedUpdatePWA');
-                }),
-                )
-                ));
-              return zip(...datas2$);
-            }
-            return of(datas);
-          })
-        )
-        .pipe(delay(1000))
-        .subscribe(() => {
-          if (downloadMessage) {
-            this.messageService.remove((downloadMessage as any).toastId);
-            const message = this.languageService.translate.instant('pwa.data-download-completed');
-            this.messageService.success(message, undefined, { timeOut: 40000 });
-            if (currentVersion) {
-              this.storageService.set('dataLoadSource', 'pending');
-              this.storageService.set('cachedDataVersion', currentVersion);
-            }
-          }
-        });
-
-      });
-    }
   }
 
   setToastPanelHtmlDisplay(value) {
@@ -811,7 +739,7 @@ ${rtss.properties.distance} m`;
     if (this.routeParams?.search && term !== this.routeParams.search) {
       this.searchState.deactivateCustomFilterTermStrategy();
     }
-
+    this.searchBarTerm = term;
     this.searchState.setSearchTerm(term);
     const termWithoutHashtag = term.replace(/(#[^\s]*)/g, '').trim();
     if (termWithoutHashtag.length < 2) {
@@ -849,6 +777,11 @@ ${rtss.properties.distance} m`;
 
   onSearchResultsGeometryStatusChange(value) {
     this.searchState.setSearchResultsGeometryStatus(value);
+  }
+
+  onReverseCoordsFormatStatusChange(value) {
+    this.storageService.set('reverseSearchCoordsFormatEnabled', value);
+    this.igoReverseSearchCoordsFormatEnabled = value;
   }
 
   onSearchSettingsChange() {
@@ -1008,7 +941,8 @@ ${rtss.properties.distance} m`;
   }
 
   searchCoordinate(coord: [number, number]) {
-    this.searchBarTerm = coord.map((c) => c.toFixed(6)).join(', ');
+    this.searchBarTerm = (!this.igoReverseSearchCoordsFormatEnabled) ?
+    coord.map((c) => c.toFixed(6)).join(', ') : coord.reverse().map((c) => c.toFixed(6)).join(', ');
   }
 
   updateMapBrowserClass() {
@@ -1211,6 +1145,13 @@ ${rtss.properties.distance} m`;
     });
   }
 
+  private readLanguageParam(params) {
+    if (params['lang']) {
+      this.authService.languageForce = true;
+      this.languageService.setLanguage(params['lang']);
+    }
+  }
+
   private computeZoomToExtent() {
     if (this.routeParams['zoomExtent']) {
       const extentParams = this.routeParams['zoomExtent'].split(',');
@@ -1239,7 +1180,7 @@ ${rtss.properties.distance} m`;
       const entities$$ = this.searchStore.stateView.all$()
         .pipe(
           skipWhile((entities) => entities.length === 0),
-          debounceTime(500),
+          debounceTime(1000),
           take(1)
         )
         .subscribe((entities) => {
@@ -1422,6 +1363,9 @@ ${rtss.properties.distance} m`;
       if (version) {
         url = url.replace('VERSION=' + version, '').replace('version=' + version, '');
       }
+      if (url.endsWith('?')) {
+        url = url.substring(0, url.length - 1);
+      }
 
       const currentLayersByService = this.extractLayersByService(
         layersByService[cnt]
@@ -1473,8 +1417,7 @@ ${rtss.properties.distance} m`;
       file,
       features,
       this.map,
-      this.messageService,
-      this.languageService
+      this.messageService
     );
   }
 
@@ -1482,8 +1425,7 @@ ${rtss.properties.distance} m`;
     handleFileImportError(
       file,
       error,
-      this.messageService,
-      this.languageService
+      this.messageService
     );
   }
 

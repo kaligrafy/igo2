@@ -241,6 +241,7 @@ Exemples
                   "enabled": true,
                   "minResolution": 0,
                   "maxResolution": 400,
+                  "searchIndexEnabled": false,
                   "queryOptions": {
                     "mapQueryOnOpenTab": false,
                     "tabQuery": false
@@ -279,7 +280,6 @@ Exemples
             {"linkedLayers": {
                 "linkId": "wmsTimeFilterSrc",
                 "links": [{
-                            "bidirectionnal": true,
                             "linkedIds": ["wmsTimeFilterDest"],
                             "syncedDelete": true,
                             "properties": ["opacity","timeFilter","visible"]
@@ -1511,7 +1511,6 @@ Source (base commune)
         Elles seront présentées dans les sections dédiées aux sources.
 
         Les sources disponible sont:
-            - `Cadastre`_
             - `Coordonnées`_
             - `iCherche`_ (Québec)
             - `iCherche Reverse`_ - par coordonnées (Québec)
@@ -1545,36 +1544,6 @@ Liens
 
     - `igo2-lib/packages/geo/src/lib/search/shared/sources/source.interfaces.ts <https://github.com/infra-geo-ouverte/igo2-lib/blob/master/packages/geo/src/lib/search/shared/sources/source.interfaces.ts>`__
 
-
-Cadastre
-===============
-
-    .. line-block::
-
-        Le service de recherches de lots rénovés du Québec.
-        Le résultat de la recherche est la géométrie du lot rénové.
-        ** Pour fonctionner l'application doit avoir accès au service CPTAQ (sécurité, CORS)
-
-Exemples
-
-    .. code:: json
-
-        {"cadastre": {
-            "searchUrl": "https://carto.cptaq.gouv.qc.ca/php/find_lot_v1.php?"
-        }}
-
-Propriétés
-
-    Seulement les propriétés spécifiques à ce service sont présentées.
-
-    .. tabularcolumns:: |p{1cm}|p{2cm}|p{7cm}|p{2cm}|
-            
-    .. csv-table::
-       :file: _tables/fr/properties/search/cadastre.csv
-       :header-rows: 1
-       :widths: 10 10 30 15
-
-    Pour les autres propriétés, référez-vous à `Source (base commune)`_ .
 
 Coordonnées
 ===============
@@ -2468,7 +2437,7 @@ importExport
           - Les shapeFiles doivent être dans un .zip
 
         Export:
-          - Seulement les couches en WFS peuvent être exportées.
+          - Seulement les couches en WFS peuvent être exportées, les couches WMS ne sont pas exportable.
 
 
 Exemples
@@ -2502,8 +2471,11 @@ Exemples
 
     .. line-block::
 
-        Outil permettant d'exporter certaines couches d'informations.
-        Noter que les couches WMS ne sont pas exportable.
+        Noter que des précisions peuvent etre ajoutées dans l'interface pour guider l'utilisateur. Ceci à l'aide des traductions disponibles:
+        Import: liste= importTabTitle, importClarifications, importSizeMax, importFormatAuthorized, importShpZip, importHtmlClarifications
+                ou plutot que la liste, vous pouvez définir du html personnalisé avec la balise importHtmlClarifications
+        Export: Définir du html personnalisé avec la balise exportHtmlClarifications.
+         - `Fichier traduction en.json <https://github.com/infra-geo-ouverte/igo2-lib/blob/master/packages/geo/src/locale/en.geo.json#L135>`__
 
 Propriétés
 

@@ -15,6 +15,7 @@ import {
 import { IgoSpinnerModule, IgoStopPropagationModule } from '@igo2/common';
 import { IgoAuthModule } from '@igo2/auth';
 import {
+  provideWorkspaceSearchSource,
   provideIChercheSearchSource,
   provideIChercheReverseSearchSource,
   provideNominatimSearchSource,
@@ -23,7 +24,6 @@ import {
   provideStoredQueriesSearchSource,
   provideOsrmDirectionsSource,
   provideOptionsApi,
-  provideCadastreSearchSource,
   provideStyleListOptions
 } from '@igo2/geo';
 
@@ -48,6 +48,14 @@ function configLoader(
   }
   return Promise.resolve();
 }
+import { MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipDefaultOptions } from '@angular/material/tooltip';
+
+export const defaultTooltipOptions: MatTooltipDefaultOptions = {
+  showDelay: 500,
+  hideDelay: 0,
+  touchendHideDelay: 0,
+  disableTooltipInteractivity: true
+};
 
 @NgModule({
   declarations: [AppComponent],
@@ -64,7 +72,10 @@ function configLoader(
     HammerModule,
     HeaderModule,
     FooterModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerWithDelay:5000' })
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.igo.app.pwa.enabled,
+      registrationStrategy: 'registerWithDelay:5000'
+    })
   ],
   providers: [
     provideConfigOptions({
@@ -79,14 +90,13 @@ function configLoader(
     RouteService,
     provideNominatimSearchSource(),
     provideIChercheSearchSource(),
+    provideWorkspaceSearchSource(),
     provideIChercheReverseSearchSource(),
     provideCoordinatesReverseSearchSource(),
     provideILayerSearchSource(),
     provideStoredQueriesSearchSource(),
     provideOsrmDirectionsSource(),
     provideOptionsApi(),
-    provideCadastreSearchSource(),
-
     {
       provide: APP_INITIALIZER,
       useFactory: appInitializerFactory,
@@ -95,7 +105,8 @@ function configLoader(
     },
     provideStyleListOptions({
       path: './assets/list-style.json'
-    })
+    }),
+    { provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: defaultTooltipOptions }
   ],
   bootstrap: [AppComponent]
 })

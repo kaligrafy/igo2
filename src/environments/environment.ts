@@ -1,4 +1,9 @@
-import { AuthOptions } from '@igo2/auth';
+// The file contents for the current environment will overwrite these during build.
+// The build system defaults to the dev environment which uses `environment.ts`, but if you do
+// `ng build --env=prod` then `environment.prod.ts` will be used instead.
+// The list of which env maps to which file can be found in `.angular-cli.json`.
+
+import { AuthOptions, AuthStorageOptions } from '@igo2/auth';
 import { DOMOptions } from '@igo2/common';
 import { AnalyticsOptions, LanguageOptions } from '@igo2/core';
 import {
@@ -14,9 +19,14 @@ interface Environment {
   igo: {
     app: {
       forceCoordsNA: boolean;
+      pwa?: {
+        enabled?: boolean;
+        promote?: boolean;
+      }
     };
     analytics: AnalyticsOptions
     auth?: AuthOptions;
+    storage: AuthStorageOptions
     catalog?: CatalogServiceOptions;
     importExport?: ImportExportServiceOptions;
     language?: LanguageOptions;
@@ -42,7 +52,11 @@ export const environment: Environment = {
   production: true,
   igo: {
     app: {
-      forceCoordsNA: true
+      forceCoordsNA: true,
+      pwa: {
+        enabled: false,
+        promote: false
+      }
     },
     analytics: {
       provider: "matomo",
@@ -60,16 +74,16 @@ export const environment: Environment = {
         keyValue: 'd8UA0Y9iMIynBa',
      }]
     },
+    storage: {
+      url: "/user/igo",
+      key: 'igo'
+    },
+
     catalog: {
       sources: []
     },
     depot: {
       url: '/apis/depot'
-    },
-    importExport: {
-      url: 'https://geoegl.msp.gouv.qc.ca/apis/ogre',
-      formats: ['GeoJSON'],
-      clientSideFileSizeMaxMb: 75
     },
     language: {
       prefix: ['./locale/', './locale/offline/']
@@ -79,7 +93,18 @@ export const environment: Environment = {
       tourInMobile: true,
       pathToConfigFile: './config/interactiveTour.json'
     },
+    importExport: {
+      importWithStyle: false,
+      url: 'https://geoegl.msp.gouv.qc.ca/apis/ogre',
+      configFileToGeoDBService: './data/geoDataToIDB.json',
+      formats: ['GeoJSON'],
+      clientSideFileSizeMaxMb: 75
+    },
     searchSources: {
+      workspace: {
+        available: true,
+        enabled: true
+      },
       nominatim: {
         available: false
       },
@@ -133,9 +158,6 @@ export const environment: Environment = {
         params: {
           limit: '5'
         }
-      },
-      cadastre: {
-        enabled: false
       }
     },
     projections: [

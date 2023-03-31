@@ -17,7 +17,6 @@
     "key": "sigo-terrain"
   },
   "favoriteContext4NonAuthenticated": true,
-  "wakeLockApiButton": true,
   "theme": "blue-theme",
   "header": {
     "hasHeader": false,
@@ -29,18 +28,18 @@
   "hasGeolocateButton": true,
   "showRotationButtonIfNoRotation": false,
   "showMenuButton": true,
-  "showSearchBar": true,
+  "searchBar": {
+    "showSearchBar": true,
+    "showSearchButton": false
+  },
+  "queryTabs": false,
+  "saveSearchResultInLayer": true,
   "hasFeatureEmphasisOnSelection": true,
   "menuButtonReverseColor": false,
   "kkhomeExtentButton": {
     "homeExtButtonExtent":[-9000000, 5790000,-7500000, 6770000],
     "homeExtButtonCenter": [-71.938087, 48.446975],
     "homeExtButtonZoom" : 6
-  },
-  "searchSources": {
-    "cadastre": {
-      "available": false
-    }
   },
   "title": "IGO",
   "sidenavTitle": "SIGO - Terrain",
@@ -49,5 +48,10 @@
     "showAgainOnNewIGOVersion": true,
     "nbVisitToShow": 2,
     "nbVisitToShowAgain": 30
-  }
+  },
+  "edition": {
+    "url": "/apis/inedit/"
+  },
+  "wakeLockApiButton": false,
+  "offlineButton": false
 }

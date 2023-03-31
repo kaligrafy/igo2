@@ -34,6 +34,11 @@
               "src/locale",
               {
                 "glob": "**/*",
+                "input": "./node_modules/@igo2/common/assets/",
+                "output": "./assets/igo2/common/"
+              },
+              {
+                "glob": "**/*",
                 "input": "./node_modules/@igo2/core/assets/",
                 "output": "./assets/igo2/core/"
               },
@@ -121,8 +126,7 @@
               "extractLicenses": true,
               "vendorChunk": true,
               "buildOptimizer": false,
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              "serviceWorker": false
             },
             "developpement": {
               "buildOptimizer": false,
@@ -153,6 +157,29 @@
               "extractLicenses": true,
               "vendorChunk": true,
               "buildOptimizer": false,
+              "serviceWorker": false
+            },
+            "pwa": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "12kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.pwa.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": true,
+              "buildOptimizer": false,
               "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json"
             },
@@ -172,7 +199,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": true,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -269,6 +295,10 @@
   "cli": {
     "schematicCollections": [
       "@angular-eslint/schematics"
-    ]
+    ],
+    "cache": {
+      "enabled": false,
+      "environment": "all"
+    }
   }
 }
