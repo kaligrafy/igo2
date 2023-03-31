@@ -88,22 +88,10 @@ export class AppComponent {
       })
     }
     if (userAgent.getOSName() === 'iOS') {
-      const translate = this.languageService.translate;
       if (userAgent.satisfies({ chrome: '>0', edge: '>0' })) {
-        const title$ = translate.get('chromeOrEdgeOnIos.title');
-        const message$ = translate.get('chromeOrEdgeOnIos.text');
-        zip(title$, message$)
-          .pipe(
-            map(([title, message]) => ({
-              title,
-              message
-            }))
-          )
-          .subscribe((rep) =>
-            this.messageService.alert(rep.message, rep.title, {
-              timeOut: 50000
-            })
-          );
+        this.messageService.alert('chromeOrEdgeOnIos.text', 'chromeOrEdgeOnIos.title', {
+          timeOut: 50000
+        });
       }
     }
   }
