@@ -57,17 +57,9 @@ export const environment: Environment = {
       tokenKey: 'id_token_igo',
       allowAnonymous: true,
       trustHosts: ['geoegl.msp.gouv.qc.ca']
-      ,hostsByKey: [{
-        domainRegFilters: '(https:\/\/|http:\/\/)?(.*geoegl.msp.gouv.qc.ca\/apis)(.*)',
-        keyProperty: 'key',
-        keyValue: 'd8UA0Y9iMIynBa',
-     }]
     },
     catalog: {
       sources: []
-    },
-    depot: {
-      url: '/apis/depot'
     },
     importExport: {
       url: 'https://geoegl.msp.gouv.qc.ca/apis/ogre',
@@ -136,9 +128,6 @@ export const environment: Environment = {
         params: {
           limit: '5'
         }
-      },
-      cadastre: {
-        enabled: false
       }
     },
     projections: [
