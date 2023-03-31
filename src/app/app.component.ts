@@ -85,7 +85,7 @@ export class AppComponent {
     if (oldBrowser) {
       this.messageService.alert('oldBrowser.message', 'oldBrowser.title', {
         timeOut: 15000
-      })
+      });
     }
     if (userAgent.getOSName() === 'iOS') {
       if (userAgent.satisfies({ chrome: '>0', edge: '>0' })) {
