@@ -7,14 +7,13 @@ import {
   ElementRef
 } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Subscription, of, BehaviorSubject, combineLatest, zip } from 'rxjs';
-import { debounceTime, take, pairwise, skipWhile, first, concatMap, delay } from 'rxjs/operators';
+import { Subscription, of, BehaviorSubject, combineLatest } from 'rxjs';
+import { debounceTime, take, pairwise, skipWhile, first } from 'rxjs/operators';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
 import * as olProj from 'ol/proj';
 import olFeature from 'ol/Feature';
 import type { default as OlGeometry } from 'ol/geom/Geometry';
-import { NgxIndexedDBService } from 'ngx-indexed-db';
 
 import {
   MediaService,
