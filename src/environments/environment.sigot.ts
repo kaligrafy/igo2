@@ -12,7 +12,7 @@ interface Environment {
   production: boolean;
   igo: {
     app: {
-      forceCoordsNA: boolean;      
+      forceCoordsNA: boolean;
       pwa?: {
         enabled?: boolean;
         promote?: boolean;
@@ -23,7 +23,7 @@ interface Environment {
     storage: StorageOptions
     catalog?: CatalogServiceOptions;
     importExport?: ImportExportServiceOptions;
-    version: { app?: string, releaseDateApp: number},
+    version: { app?: string, releaseDateApp: number },
     language?: LanguageOptions;
     searchSources?: { [key: string]: SearchSourceOptions };
     projections?: Projection[];
@@ -121,7 +121,7 @@ export const environment: Environment = {
         order: 2,
         params: {
           limit: '8',
-          type:'adresses,codes-postaux,routes,intersections,municipalites,mrc,regadmin,lieux,sorties-autoroute,bornes-km'
+          type: 'adresses,codes-postaux,routes,intersections,municipalites,mrc,regadmin,lieux,sorties-autoroute,bornes-km'
         }
       },
       coordinatesreverse: {
