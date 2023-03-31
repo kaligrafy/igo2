@@ -11,7 +11,7 @@
     "ng": "ng",
     "start": "gulp watch:locale | ng serve --host 0.0.0.0 --port 4201 --proxy-config proxy.conf.json",
     "start-pwa": "gulp bumpPwaVersionDev && ng build --configuration pwa --output-path ./dist/pwa && npm run serve.pwa",
-    "start-sigot": "npm run pwaBumpVersion.dev && npm run build.sigot && http-server -p 4201 -c-1 dist/sigo-terrain",
+    "start-sigot": "npm run build.sigot && http-server -p 4201 -c-1 dist/sigo-terrain",
     "build": "ng build",
     "lint": "ng lint",
     "lint.fix": "ng lint --fix",
