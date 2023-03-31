@@ -67,7 +67,6 @@ import {
   generateIdFromSourceOptions,
   computeOlFeaturesExtent,
   addStopToStore,
-  GeoDBService,
   ImageLayer,
   VectorLayer,
   MapExtent,
@@ -104,7 +103,6 @@ import { WelcomeWindowService } from './welcome-window/welcome-window.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { ObjectUtils } from '@igo2/utils';
 import olFormatGeoJSON from 'ol/format/GeoJSON';
-import { PwaService } from '../../services/pwa.service';
 
 @Component({
   selector: 'app-portal',
