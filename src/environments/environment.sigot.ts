@@ -1,5 +1,5 @@
 import { AuthOptions } from '@igo2/auth';
-import { AnalyticsOptions, LanguageOptions } from '@igo2/core';
+import { AnalyticsOptions, LanguageOptions, StorageOptions } from '@igo2/core';
 import {
   SearchSourceOptions,
   CatalogServiceOptions,
@@ -12,10 +12,15 @@ interface Environment {
   production: boolean;
   igo: {
     app: {
-      forceCoordsNA: boolean;
+      forceCoordsNA: boolean;      
+      pwa?: {
+        enabled?: boolean;
+        promote?: boolean;
+      }
     };
     analytics: AnalyticsOptions
     auth?: AuthOptions;
+    storage: StorageOptions
     catalog?: CatalogServiceOptions;
     importExport?: ImportExportServiceOptions;
     version: { app?: string, releaseDateApp: number},
@@ -40,12 +45,19 @@ interface Environment {
 export const environment: Environment = {
   production: true,
   igo: {
+    storage: {
+      key: "sigo-terrain"
+    },
     version: {
       app: "1.11.1.220720.0",
       releaseDateApp: new Date('2023-03-30').getTime()
     },
     app: {
-      forceCoordsNA: true
+      forceCoordsNA: true,
+      pwa: {
+        enabled: true,
+        promote: true
+      }
     },
     analytics: {
       provider: "matomo",
