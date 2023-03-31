@@ -5,7 +5,8 @@
 
 import { AuthOptions, AuthStorageOptions } from '@igo2/auth';
 import { DOMOptions } from '@igo2/common';
-import { AnalyticsOptions, LanguageOptions } from '@igo2/core';
+import { ContextServiceOptions } from '@igo2/context';
+import { LanguageOptions } from '@igo2/core';
 import {
   SearchSourceOptions,
   CatalogServiceOptions,
@@ -24,15 +25,15 @@ interface Environment {
         promote?: boolean;
       }
     };
-    analytics: AnalyticsOptions
     auth?: AuthOptions;
     storage: AuthStorageOptions
     catalog?: CatalogServiceOptions;
+    context?: ContextServiceOptions;
     importExport?: ImportExportServiceOptions;
     language?: LanguageOptions;
     searchSources?: { [key: string]: SearchSourceOptions };
     projections?: Projection[];
-    interactiveTour?: { activateInteractiveTour: boolean, tourInMobile: boolean; pathToConfigFile: string };
+    interactiveTour?: { tourInMobile: boolean; pathToConfigFile: string };
     depot?: { url: string; trainingGuides?: string[]; };
     dom?: DOMOptions[];
     queryOverlayStyle?: {
@@ -49,7 +50,7 @@ interface Environment {
 }
 
 export const environment: Environment = {
-  production: true,
+  production: false,
   igo: {
     app: {
       forceCoordsNA: true,
@@ -58,21 +59,16 @@ export const environment: Environment = {
         promote: false
       }
     },
-    analytics: {
-      provider: "matomo",
-      url: "https://geoegl.msp.gouv.qc.ca/Visiteur",
-      id: "38"
-    },
     auth: {
-      // url: '/apis/users',
+      url: '/apis/users',
       tokenKey: 'id_token_igo',
       allowAnonymous: true,
       trustHosts: ['geoegl.msp.gouv.qc.ca']
-      ,hostsByKey: [{
-        domainRegFilters: '(https:\/\/|http:\/\/)?(.*geoegl.msp.gouv.qc.ca\/apis)(.*)',
-        keyProperty: 'key',
-        keyValue: 'd8UA0Y9iMIynBa',
-     }]
+      /*,hostsByKey: [{
+         domainRegFilters: '(https:\/\/|http:\/\/)?(.*domain.com)(.*)',
+         keyProperty: 'key',
+         keyValue: '123456',
+      }]*/
     },
     storage: {
       url: "/user/igo",
@@ -80,25 +76,218 @@ export const environment: Environment = {
     },
 
     catalog: {
-      sources: []
+      sources: [
+        {
+          id: 'Image Arcgis Rest',
+          title: 'Image Arcgis Rest',
+          externalProvider: true,
+          url: 'https://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_StateCityHighway_USA/MapServer',
+          type: 'imagearcgisrest',
+          sourceOptions: {
+            queryable: true
+          }
+        },
+        {
+          id: 'Gououvert',
+          title: 'Gouvouvert',
+          url: '/apis/ws/igo_gouvouvert.fcgi'
+        },
+        {
+          id: 'glace',
+          title: 'Carte de glace',
+          url: '/apis/ws/radarsat.fcgi',
+          showLegend: true
+        },
+        {
+          id: 'baselayerWMTS',
+          title: 'Fonds / Baselayers',
+          url: '/carto/wmts',
+          type: 'wmts',
+          matrixSet: 'EPSG_3857',
+          version: '1.3.0'
+        },
+        {
+          id: 'fusion_catalog',
+          title: '(composite catalog) fusion catalog',
+          url: '',
+          composite: [
+            {
+              id: 'tq_swtq',
+              url: 'https://ws.mapserver.transports.gouv.qc.ca/swtq'
+            },
+            {
+              id: 'rn_wmts',
+              url:
+                'https://servicesmatriciels.mern.gouv.qc.ca/erdas-iws/ogc/wmts/Cartes_Images',
+              type: 'wmts',
+              setCrossOriginAnonymous: true,
+              matrixSet: 'EPSG_3857',
+              version: '1.0.0'
+            }
+          ]
+        },
+        {
+          id: 'forced_properties',
+          title: 'Forced properties catalog (layer name and abstract)',
+          url: '',
+          composite: [
+            {
+              id: 'forcedProperties_wmts',
+              url:
+                'https://servicesmatriciels.mern.gouv.qc.ca/erdas-iws/ogc/wmts/Cartes_Images',
+              type: 'wmts',
+              setCrossOriginAnonymous: true,
+              matrixSet: 'EPSG_3857',
+              version: '1.0.0',
+              forcedProperties: [{
+                metadataAbstract: 'Nouvel abstract',
+                layerName: 'BDTQ-20K_Allegee',
+                title: 'Nouveau nom et abstract pour cette couche WMTS',
+              }]
+            },
+            {
+              id: 'forcedProperties_wms',
+              url: 'https://ws.mapserver.transports.gouv.qc.ca/swtq',
+              type: 'wms',
+              forcedProperties: [
+                {
+                  layerName: "*",
+                  //metadataUrlAll: "https://quebec.ca/",
+                  metadataAbstractAll: "New WMS abstract to all layers"
+                },
+                {
+                  layerName: 'etablissement_mtq',
+                  title: 'Nouveau nom pour cette couche WMS et nouvel url pour toutes les couches',
+                  //metadataAbstract: "New WMS Abstract",
+                  metadataUrl: 'https://www.donneesquebec.ca/'
+                }
+              ]
+            },
+            {
+              id: 'forcedProperties_arcgisrest',
+              url: 'https://gisp.dfo-mpo.gc.ca/arcgis/rest/services/FGP/Seafloor_SubstratBenthique/MapServer',
+              externalProvider: true,
+              type: 'arcgisrest',
+              forcedProperties: [{
+                layerName: 'Sediment substrate / Substrat sédimentaire',
+                title: 'Nouveau nom et nouvel url pour cette couche ArcGIS REST',
+                metadataUrl: "https://www.donneesquebec.ca/",
+              },
+            {
+              layerName: "*",
+              //metadataUrlAll: "https://quebec.ca/",
+              metadataAbstractAll: "New arcgisrest abstract to all layers"
+            }]
+            }
+          ]
+        },
+        {
+          id: 'group_impose',
+          title:
+            '(composite catalog) group imposed and unique layer title for same source',
+          url: '',
+          composite: [
+            {
+              id: 'tq_swtq',
+              url: 'https://ws.mapserver.transports.gouv.qc.ca/swtq',
+              regFilters: ['zpegt'],
+              groupImpose: { id: 'zpegt', title: 'zpegt' }
+            },
+            {
+              id: 'Gououvert',
+              url: 'https://geoegl.msp.gouv.qc.ca/apis/ws/igo_gouvouvert.fcgi',
+              regFilters: ['zpegt'],
+              groupImpose: { id: 'zpegt', title: 'zpegt' }
+            },
+            {
+              id: 'Gououvert',
+              url: 'https://geoegl.msp.gouv.qc.ca/apis/ws/igo_gouvouvert.fcgi',
+              regFilters: ['zpegt'],
+              groupImpose: { id: 'zpegt', title: 'zpegt' }
+            },
+            {
+              id: 'rn_wmts',
+              url:
+                'https://servicesmatriciels.mern.gouv.qc.ca/erdas-iws/ogc/wmts/Cartes_Images',
+              type: 'wmts',
+              setCrossOriginAnonymous: true,
+              matrixSet: 'EPSG_3857',
+              version: '1.0.0',
+              groupImpose: {
+                id: 'cartetopo',
+                title: 'Carte topo échelle 1/20 000'
+              }
+            }
+          ]
+        },
+        {
+          id: 'tag_layernametitle',
+          title: '(composite catalog) tag source on same layer title',
+          url: '',
+          composite: [
+            {
+              id: 'tq_swtq',
+              url: 'https://ws.mapserver.transports.gouv.qc.ca/swtq',
+              regFilters: ['limtn_charg'],
+              groupImpose: {
+                id: 'mix_swtq_gouv',
+                title: 'mix same name layer'
+              }
+            },
+            {
+              id: 'Gououvert',
+              url: 'https://geoegl.msp.gouv.qc.ca/apis/ws/igo_gouvouvert.fcgi',
+              regFilters: ['limtn_charg'],
+              groupImpose: {
+                id: 'mix_swtq_gouv',
+                title: 'mix same name layer'
+              }
+            }
+          ]
+        }
+      ]
     },
+    // context: {
+    //   url: '/apis/igo2',
+    //   defaultContextUri: '5'
+    // },
     depot: {
       url: '/apis/depot'
     },
+    dom: [
+      // {
+      //   id: 1,
+      //   name: 'test-dom',
+      //   values: [
+      //     {
+      //       id: "Radar photo fixe",
+      //       value: "Radar photo fixe"
+      //     },
+      //     {
+      //       id: "Radar photo mobile",
+      //       value: "Radar photo mobile"
+      //     }
+      //   ]
+      // },
+      {
+        id: 1,
+        name: 'dom_test',
+        url: "https://ws.mapserver.transports.gouv.qc.ca/applicatif?service=WFS&request=GetFeature&version=2.0.0&outputformat=dom&typenames=dom&dom=dom_test"
+      }
+    ],
     language: {
-      prefix: ['./locale/', './locale/offline/']
+      prefix: './locale/'
     },
     interactiveTour: {
-      activateInteractiveTour: false,
       tourInMobile: true,
       pathToConfigFile: './config/interactiveTour.json'
     },
     importExport: {
       importWithStyle: false,
-      url: 'https://geoegl.msp.gouv.qc.ca/apis/ogre',
+      url: '/apis/ogre',
       configFileToGeoDBService: './data/geoDataToIDB.json',
-      formats: ['GeoJSON'],
-      clientSideFileSizeMaxMb: 75
+      clientSideFileSizeMaxMb: 32,
+      allowToStoreLayer: true
     },
     searchSources: {
       workspace: {
@@ -109,37 +298,13 @@ export const environment: Environment = {
         available: false
       },
       storedqueries: {
-        title: 'Réseau routier Transports Québec',
-        searchUrl: 'https://ws.mapserver.transports.gouv.qc.ca/swtq',
-        available: true,
-        enabled: true,
-        storedquery_id: 'rtss',
-        srsname: 'epsg:4326',
-        fields: [
-          { name: 'rtss', defaultValue: '-99' },
-          { name: 'chainage', defaultValue: '0', splitPrefix: '\\+' }
-        ],
-        resultTitle: 'title'
-      } as any,
-      storedqueriesreverse: {
-        order: 1,
-        showInPointerSummary: false,
-        title: 'Limite territoriale MTQ (par coordonnées)',
-        searchUrl: 'https://ws.mapserver.transports.gouv.qc.ca/swtq',
-        enabled: true,
-        available: true,
-        storedquery_id: 'dgt_latlon',
-        srsname: 'epsg:4326',
-        longField: 'long',
-        latField: 'lat',
-        resultTitle: 'nom_unite_'
-      } as any,
+        available: false
+      },
       icherche: {
-        searchUrl: 'https://geoegl.msp.gouv.qc.ca/apis/icherche',
+        searchUrl: '/apis/icherche',
         order: 2,
         params: {
-          limit: '8',
-          type:'adresses,codes-postaux,routes,intersections,municipalites,mrc,regadmin,lieux,sorties-autoroute,bornes-km'
+          limit: '5'
         }
       },
       coordinatesreverse: {
@@ -147,13 +312,12 @@ export const environment: Environment = {
       },
       icherchereverse: {
         showInPointerSummary: true,
-        searchUrl: 'https://geoegl.msp.gouv.qc.ca/apis/terrapi',
+        searchUrl: '/apis/terrapi',
         order: 3,
         enabled: true
       },
       ilayer: {
-        searchUrl: 'https://geoegl.msp.gouv.qc.ca/apis/icherche/layers',
-        available: false,
+        searchUrl: '/apis/icherche/layers',
         order: 4,
         params: {
           limit: '5'
@@ -165,8 +329,8 @@ export const environment: Environment = {
         code: 'EPSG:32198',
         alias: 'Quebec Lambert',
         def:
-          '+proj=lcc +lat_1=60 +lat_2=46 +lat_0=44 +lon_0=-68.5 +x_0=0 +y_0=0 \
-          +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
+          '+proj=lcc +lat_1=60 +lat_2=46 +lat_0=44 +lon_0=-68.5 +x_0=0 +y_0=0 +ellps=GRS80 \
+          +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
         extent: [-799574, 45802, 891595.4, 1849567.5]
       },
       {
@@ -190,56 +354,56 @@ export const environment: Environment = {
         strokeWidth: 2 // line and poly
       },
       focus: {
-        markerColor: '#00A1DE', // marker fill
+        markerColor: '#5ed0fb', // marker fill
         markerOpacity: 1, // marker opacity not applied if a rgba markerColor is provided
         markerOutlineColor: '#DFF7FF', // marker contour
-        fillColor: '#00A1DE', // poly
+        fillColor: '#5ed0fb', // poly
         fillOpacity: 0.3, // poly fill opacity not applied if a rgba fillColor is provided
-        strokeColor: '#00A1DE', // line and poly
+        strokeColor: '#DFF7FF', // line and poly
         strokeOpacity: 1, // line and poly not applied if a rgba strokeColor is provided
         strokeWidth: 2 // line and poly
       },
       selection: {
-        markerColor: '#FFFF33', // marker fill
+        markerColor: '#00a1de', // marker fill
         markerOpacity: 1, // marker opacity not applied if a rgba markerColor is provided
-        markerOutlineColor: '#000000', // marker contour
-        fillColor: '#FFFF33', // poly
+        markerOutlineColor: '#ffffff', // marker contour
+        fillColor: '#00a1de', // poly
         fillOpacity: 0.3, // poly fill opacity not applied if a rgba fillColor is provided
-        strokeColor: '#FFFF33', // line and poly
-        strokeOpacity: 0.75, // line and poly not applied if a rgba strokeColor is provided
-        strokeWidth: 4 // line and poly
+        strokeColor: '#00A1DE', // line and poly
+        strokeOpacity: 1, // line and poly not applied if a rgba strokeColor is provided
+        strokeWidth: 2 // line and poly
       }
     },
     queryOverlayStyle: {
       base: {
-        markerColor: '#136dbd', // marker fill
+        markerColor: '#5ed0fb', // marker fill
         markerOpacity: 0.8, // marker opacity not applied if a rgba markerColor is provided
         markerOutlineColor: '#a7e7ff', // marker contour
-        fillColor: '#136dbd', // poly
-        fillOpacity: 0, // poly fill opacity not applied if a rgba fillColor is provided
-        strokeColor: '#136dbd', // line and poly
-        strokeOpacity: 1, // line and poly not applied if a rgba strokeColor is provided
+        fillColor: '#5ed0fb', // poly
+        fillOpacity: 0.2, // poly fill opacity not applied if a rgba fillColor is provided
+        strokeColor: '#5ed0fb', // line and poly
+        strokeOpacity: 0.7, // line and poly not applied if a rgba strokeColor is provided
         strokeWidth: 2 // line and poly
       },
       focus: {
-        markerColor: '#00A1DE', // marker fill
+        markerColor: '#5ed0fb', // marker fill
         markerOpacity: 1, // marker opacity not applied if a rgba markerColor is provided
         markerOutlineColor: '#DFF7FF', // marker contour
-        fillColor: '#00A1DE', // poly
+        fillColor: '#5ed0fb', // poly
         fillOpacity: 0.3, // poly fill opacity not applied if a rgba fillColor is provided
-        strokeColor: '#00A1DE', // line and poly
-        strokeOpacity: 0.6, // line and poly not applied if a rgba strokeColor is provided
-        strokeWidth: 7 // line and poly
+        strokeColor: '#DFF7FF', // line and poly
+        strokeOpacity: 1, // line and poly not applied if a rgba strokeColor is provided
+        strokeWidth: 2 // line and poly
       },
       selection: {
-        markerColor: '#02f7e7', // marker fill
+        markerColor: '#00a1de', // marker fill
         markerOpacity: 1, // marker opacity not applied if a rgba markerColor is provided
-        markerOutlineColor: '#000000', // marker contour
-        fillColor: '#02f7e7', // poly
+        markerOutlineColor: '#ffffff', // marker contour
+        fillColor: '#00a1de', // poly
         fillOpacity: 0.3, // poly fill opacity not applied if a rgba fillColor is provided
-        strokeColor: '#02f7e7', // line and poly
-        strokeOpacity: 0.8, // line and poly not applied if a rgba strokeColor is provided
-        strokeWidth: 10 // line and poly
+        strokeColor: '#00A1DE', // line and poly
+        strokeOpacity: 1, // line and poly not applied if a rgba strokeColor is provided
+        strokeWidth: 2 // line and poly
       }
     }
   }
