@@ -101,7 +101,6 @@ import { WelcomeWindowService } from './welcome-window/welcome-window.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { ObjectUtils } from '@igo2/utils';
 import olFormatGeoJSON from 'ol/format/GeoJSON';
-import { PwaService } from '../../services/pwa.service';
 
 @Component({
   selector: 'app-portal',
@@ -126,6 +125,8 @@ export class PortalComponent implements OnInit, OnDestroy {
   public hasHomeExtentButton = false;
   public showMenuButton = true;
   public showSearchBar = true;
+  public showOfflineButton = false;
+  public showWakeLockButton = false;
   public showRotationButtonIfNoRotation = false;
   public hasFeatureEmphasisOnSelection: Boolean = false;
   public workspaceNotAvailableMessage: String = 'workspace.disabled.resolution';
@@ -246,6 +247,10 @@ export class PortalComponent implements OnInit, OnDestroy {
     }
   }
 
+  get contextUri(): string {
+    return this.contextState.context$?.getValue() ? this.contextState.context$.getValue().uri : undefined;
+  }
+
   get toastPanelShown(): boolean {
     return true;
   }
@@ -333,7 +338,6 @@ export class PortalComponent implements OnInit, OnDestroy {
     private storageService: StorageService,
     private editionWorkspaceService: EditionWorkspaceService,
     private directionState: DirectionState,
-    private pwaService: PwaService,
     private configFileToGeoDBService: ConfigFileToGeoDBService
   ) {
     this.hasExpansionPanel = this.configService.getConfig('hasExpansionPanel');
@@ -347,6 +351,11 @@ export class PortalComponent implements OnInit, OnDestroy {
       this.configService.getConfig('showMenuButton');
     this.showSearchBar = this.configService.getConfig('searchBar.showSearchBar') === undefined ? true :
       this.configService.getConfig('searchBar.showSearchBar');
+    this.showOfflineButton = this.configService.getConfig('offlineButton') === undefined ? false :
+      this.configService.getConfig('offlineButton');
+    this.showWakeLockButton = this.configService.getConfig('wakeLockApiButton') === undefined ? false :
+      this.configService.getConfig('wakeLockApiButton');
+
     this.forceCoordsNA = this.configService.getConfig('app.forceCoordsNA');
     this.hasFeatureEmphasisOnSelection = this.configService.getConfig('hasFeatureEmphasisOnSelection');
 
@@ -1373,8 +1382,9 @@ export class PortalComponent implements OnInit, OnDestroy {
       file,
       features,
       this.map,
+      this.contextState.context$.value.uri,
       this.messageService,
-      this.languageService
+      this.layerService
     );
   }
 
@@ -1382,8 +1392,7 @@ export class PortalComponent implements OnInit, OnDestroy {
     handleFileImportError(
       file,
       error,
-      this.messageService,
-      this.languageService
+      this.messageService
     );
   }
 

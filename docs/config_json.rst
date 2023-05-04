@@ -45,6 +45,45 @@ Résumé
     Important : Les propriétés en caractère gras suivies d'un * sont obligatoires.
 
 ***************
+App
+***************
+
+    .. line-block::
+
+        Permet d'activer des options pour l'application.
+
+Exemples
+
+        .. code:: json
+
+            "app": {
+                "forceCoordsNA": false,
+                "install": {
+                    enabled: true,
+                    promote: false,
+                    manifestPath: '../config/github.webmanifest'
+                },
+                "pwa": {
+                    enable: true
+                }
+            }
+
+Propriétés
+
+    .. line-block::
+
+        forceCoordsNA:  true/false = force les coordonnées en Amérique du Nord
+        install: Object permettant de dire comment l'application sera installée.
+        install.enabled: true/false = Application installable ou non.
+        install.manifestPath: Identifie un chemin d'accès pour le manifest (info sur l'app).
+                              Par défaut: 'manifest.webmanifest'
+        install.promote: true/false = Permet (Windows/Android) de faire afficher un message 
+                                      incitant les utilisateurs a installer l'application
+        pwa: Object permettant de dire comment l'application sera mis en mémoire cache.
+        pwa.enabled: true/false = Identifie si l'application sera mis en mémoire cache. 
+
+
+***************
 Analytics
 ***************
 
@@ -531,7 +570,8 @@ Exemples
                 gpxAggregateInComment: false,
                 forceNaming: false,
                 formats: ['GeoJSON', 'GML', 'GPX', 'KML', 'Shapefile', 'CSV'],
-                configFileToGeoDBService: './data/geoDataToIDB.json'
+                configFileToGeoDBService: './data/geoDataToIDB.json',
+                allowToStoreLayer: true
             }
 
 Propriétés
@@ -767,6 +807,22 @@ Liens
         - `igo2-lib/blob/master/demo/src/environments/environment.ts <https://github.com/infra-geo-ouverte/igo2-lib/blob/master/demo/src/environments/environment.ts>`_
 
 
+********************************
+QueryTabs
+********************************
+
+    .. line-block::
+
+        Permet de définir le type d'affichage de la résultat de Query,
+        affichage par liste ou onglet.
+
+Exemples
+
+    .. code:: json
+
+            "queryTabs": true
+
+
 .. _igoroutingsource:
 
 ***************
@@ -951,6 +1007,20 @@ Liens
         - `igo2-lib/core/src/lib/storage/storage.interface.ts <https://github.com/infra-geo-ouverte/igo2-lib/blob/master/packages/core/src/lib/storage/storage.interface.ts>`_
         - `igo2-lib/auth/src/lib/shared/storage.interface.ts <https://github.com/infra-geo-ouverte/igo2-lib/blob/master/packages/auth/src/lib/shared/storage.interface.ts>`_
         - `API de contexte <https://github.com/infra-geo-ouverte/igo2-api>`_
+
+********************************
+saveSearchResultInLayer
+********************************
+
+    .. line-block::
+
+        Permet d'activer ou désactiver l'enregistrement d'un résultat de recherche dans une couche.
+
+Exemples
+
+    .. code:: json
+
+            "saveSearchResultInLayer": true
 
 ***************
 Theme
