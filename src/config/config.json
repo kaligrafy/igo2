@@ -1,9 +1,4 @@
 {
-  "routingSources": {
-    "osrm": {
-      "enabled": true
-    }
-  },
   "directionsSources": {
     "osrm": {
       "url": "/services/itineraire/route/v1/driving/"
@@ -56,6 +51,8 @@
     "showSearchBar": true,
     "showSearchButton": false
   },
+  "queryTabs": false,
+  "saveSearchResultInLayer": true,
   "hasFeatureEmphasisOnSelection": true,
   "menuButtonReverseColor": false,
   "homeExtentButton": {
@@ -66,5 +63,7 @@
   "title": "IGO",
   "edition": {
     "url": "/apis/inedit/"
-  }
+  },
+  "wakeLockApiButton": false,
+  "offlineButton": false
 }
