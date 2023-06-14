@@ -1,0 +1,111 @@
+diff --git a/proxy.conf.json b/proxy.conf.json
+index 0463bb5..065e339 100644
+--- a/proxy.conf.json
++++ b/proxy.conf.json
+@@ -1,4 +1,27 @@
+ {
++  "/test/": {
++    "target": "http://geodev1.sso.msp.gouv.qc.ca",
++    "secure": false,
++    "changeOrigin": true,
++    "pathRewrite": {
++      "^/test" : "/ws"
++    }
++  },
++  "/libcommunes/": {
++    "target": "https://geoegl.msp.gouv.qc.ca",
++    "secure": false,
++    "changeOrigin": true
++  },
++  "/igo/modules/": {
++    "target": "https://geoegl.msp.gouv.qc.ca",
++    "secure": false,
++    "changeOrigin": true
++  },
++  "/station_details_readings_api": {
++    "target": "https://inedit-ro.devgeo.msp.gouv.qc.ca",
++    "secure": false,
++    "changeOrigin": true
++  },
+   "/ws/": {
+     "target": "https://geoegl.msp.gouv.qc.ca",
+     "secure": false,
+@@ -14,6 +37,11 @@
+     "secure": false,
+     "changeOrigin": true
+   },
++  "/user/igo": {
++    "target": "https://testgeoegl.msp.gouv.qc.ca",
++    "secure": false,
++    "changeOrigin": true
++  },
+   "/swtq": {
+     "target": "https://ws.mapserver.transports.gouv.qc.ca",
+     "secure": false,
+diff --git a/src/contexts/_default.json b/src/contexts/_default.json
+index fb92e61..abdb319 100644
+--- a/src/contexts/_default.json
++++ b/src/contexts/_default.json
+@@ -3,45 +3,35 @@
+   "base": "_base",
+   "layers": [
+     {
+-      "title": "MSP DESSERTE MUN 911",
++      "title": "test-env-canada",
++      "baseLayer": false,
++      "visible": true,
+       "sourceOptions": {
+-        "type": "wms",
+-        "url": "https://geoegl.msp.gouv.qc.ca/apis/ws/igo_gouvouvert.fcgi",
++        "url": "/test/all.fcgi",
++        "queryable": true,
++        "queryFormat": "htmlgml2", 
++        "queryHtmlTarget": "iframe",
+         "params": {
+-          "layers": "MSP_DESSERTE_MUN_911",
++          "layers": "msp_env_canada_stats_v",
+           "version": "1.3.0"
+         },
+-        "queryable": false,
+-        "queryFormat": "gml2",
+-        "queryTitle": "Municipalite"
++        "type": "wms"
+       }
+     },
+     {
+-      "title": "MSP Tel. Urgence",
++      "title": "test-adn-station",
++      "baseLayer": false,
++      "visible": true,
+       "sourceOptions": {
+-        "type": "wms",
+-        "url": "https://geoegl.msp.gouv.qc.ca/apis/ws/igo_gouvouvert.fcgi",
+-        "params": {
+-          "layers": "telephone_urg",
+-          "version": "1.3.0"
+-        },
++        "url": "/test/all.fcgi",
+         "queryable": true,
+-        "queryFormat": "gml2",
+-        "queryTitle": "desclocal"
+-      }
+-    },
+-    {
+-      "title": "Établissements MTQ",
+-      "sourceOptions": {
+-        "type": "wms",
+-        "url": "https://ws.mapserver.transports.gouv.qc.ca/swtq",
++        "queryFormat": "htmlgml2", 
++        "queryHtmlTarget": "iframe",
+         "params": {
+-          "layers": "etablissement_mtq",
++          "layers": "adn_station_partenaires_vm",
+           "version": "1.3.0"
+         },
+-        "queryable": true,
+-        "queryFormat": "htmlgml2",
+-        "queryTitle": "nometablis"
++        "type": "wms"
+       }
+     }
+   ]
