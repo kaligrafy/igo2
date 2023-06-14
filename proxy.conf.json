@@ -3,6 +3,7 @@
     "target": "http://geodev8.sso.msp.gouv.qc.ca",
     "secure": false,
     "changeOrigin": true,
+    "logLevel": "debug",
     "pathRewrite": {
       "^/test" : "/ws"
     }
