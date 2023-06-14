@@ -19,6 +19,22 @@
       }
     },
     {
+      "title": "Test",
+      "baseLayer": false,
+      "visible": true,
+      "sourceOptions": {
+        "url": "/test/all.fcgi?SERVICE=WMS&VERSION=1.3.0&REQUEST=Getcapabilities",
+        "queryable": true,
+        "queryFormat": "htmlgml2",
+        "queryHtmlTarget": "iframe",
+        "params": {
+          "layers": "test",
+          "version": "1.3.0"
+        },
+        "type": "wms"
+      }
+    },
+    {
       "title": "test-adn-station",
       "baseLayer": false,
       "visible": true,
