@@ -2920,18 +2920,14 @@ igo-zoom-button > div.igo-zoom-button-container > button.mat-accent {
   background-color: black;
 }
 
-igo-menu-button > #menu-button {
+igo-menu-button > button#menu-button {
+  color: rgb(255, 255, 255);
+  background-color: #095797;
+}
+
+igo-menu-button > button#menu-button.menu-button-white-background {
   color: #095797;
-}
-
-igo-menu-button > #menu-button.menu-button-reverse-color-close {
-  background-color: #095797;
-  color: white;
-}
-
-igo-menu-button > #menu-button.menu-button-reverse-color {
-  background-color: #095797;
-  color: white;
+  background-color: rgb(255, 255, 255);
 }
 
 .igo-map-tooltip-measure {

@@ -114,6 +114,20 @@ igo-search-results .mdc-list-item--with-leading-icon .mdc-list-item__start {
   color: #223654;
 }
 
+*::-webkit-scrollbar {
+  width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #dae6f0;
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #095797;
+  border-radius: 10px;
+}
+
 .mat-ripple {
   overflow: hidden;
   position: relative;
@@ -3030,18 +3044,14 @@ igo-zoom-button > div.igo-zoom-button-container > button.mat-accent {
   background-color: #223654;
 }
 
-igo-menu-button > #menu-button {
+igo-menu-button > button#menu-button {
+  color: rgb(255, 255, 255);
+  background-color: #095797;
+}
+
+igo-menu-button > button#menu-button.menu-button-white-background {
   color: #095797;
-}
-
-igo-menu-button > #menu-button.menu-button-reverse-color-close {
-  background-color: #095797;
-  color: white;
-}
-
-igo-menu-button > #menu-button.menu-button-reverse-color {
-  background-color: #095797;
-  color: white;
+  background-color: rgb(255, 255, 255);
 }
 
 .igo-map-tooltip-measure {
