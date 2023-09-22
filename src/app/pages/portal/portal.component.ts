@@ -148,7 +148,6 @@ export class PortalComponent implements OnInit, OnDestroy {
 
   public fullExtent: boolean;
   private workspaceMaximize$$: Subscription[] = [];
-  readonly workspaceMaximize$: BehaviorSubject<boolean>;
 
   public matDialogRef$ = new BehaviorSubject<MatDialogRef<any>>(undefined);
   public searchBarTerm = '';
@@ -347,9 +346,6 @@ export class PortalComponent implements OnInit, OnDestroy {
     private configFileToGeoDBService: ConfigFileToGeoDBService
   ) {
     this.fullExtent = this.storageService.get('fullExtent') as boolean;
-    this.workspaceMaximize$ = new BehaviorSubject(
-      this.storageService.get('workspaceMaximize') as boolean
-    );
     this._toastPanelOpened =
       (this.storageService.get('toastOpened') as boolean) !== false;
     this.hasExpansionPanel = this.configService.getConfig('hasExpansionPanel');
@@ -366,10 +362,9 @@ export class PortalComponent implements OnInit, OnDestroy {
       undefined
         ? false
         : this.configService.getConfig('showRotationButtonIfNoRotation');
-    this.showMenuButton =
-      this.configService.getConfig('showMenuButton') === undefined
-        ? true
-        : this.configService.getConfig('showMenuButton');
+    const showMenuConfig = this.configService.getConfig('menu.button.show');
+    this.showMenuButton = showMenuConfig !== undefined ? showMenuConfig : true;
+
     this.showSearchBar =
       this.configService.getConfig('searchBar.showSearchBar') === undefined
         ? true
@@ -492,12 +487,8 @@ export class PortalComponent implements OnInit, OnDestroy {
 
     this.workspaceMaximize$$.push(
       this.workspaceState.workspaceMaximize$.subscribe((workspaceMaximize) => {
-        this.workspaceMaximize$.next(workspaceMaximize);
         this.updateMapBrowserClass();
       })
-    );
-    this.workspaceMaximize$$.push(
-      this.workspaceMaximize$.subscribe(() => this.updateMapBrowserClass())
     );
 
     this.workspaceState.workspace$.subscribe(
@@ -985,7 +976,7 @@ export class PortalComponent implements OnInit, OnDestroy {
     }
 
     if (this.hasExpansionPanel && this.expansionPanelExpanded) {
-      if (this.workspaceMaximize$.value) {
+      if (this.workspaceState.workspaceMaximize$.value) {
         this.mapBrowser.nativeElement.classList.add(
           'expansion-offset-maximized'
         );
@@ -997,7 +988,7 @@ export class PortalComponent implements OnInit, OnDestroy {
         );
       }
     } else {
-      if (this.workspaceMaximize$.value) {
+      if (this.workspaceState.workspaceMaximize$.value) {
         this.mapBrowser.nativeElement.classList.remove(
           'expansion-offset-maximized'
         );
@@ -1092,7 +1083,7 @@ export class PortalComponent implements OnInit, OnDestroy {
   getToastPanelOffsetY() {
     let status = 'noExpansion';
     if (this.expansionPanelExpanded) {
-      if (this.workspaceMaximize$.value) {
+      if (this.workspaceState.workspaceMaximize$.value) {
         if (this.toastPanelOpened) {
           status = 'expansionMaximizedAndToastOpened';
         } else {
@@ -1124,7 +1115,7 @@ export class PortalComponent implements OnInit, OnDestroy {
   }
   getControlsOffsetY() {
     return this.expansionPanelExpanded
-      ? this.workspaceMaximize$.value
+      ? this.workspaceState.workspaceMaximize$.value
         ? 'firstRowFromBottom-expanded-maximized'
         : 'firstRowFromBottom-expanded'
       : 'firstRowFromBottom';
@@ -1157,7 +1148,7 @@ export class PortalComponent implements OnInit, OnDestroy {
     } else {
       if (this.workspaceState.workspaceEnabled$.value) {
         if (this.expansionPanelExpanded) {
-          if (this.workspaceMaximize$.value) {
+          if (this.workspaceState.workspaceMaximize$.value) {
             status = 'firstRowFromBottom-expanded-maximized';
           } else {
             status = 'firstRowFromBottom-expanded';
@@ -1331,7 +1322,7 @@ export class PortalComponent implements OnInit, OnDestroy {
       // zoom to active route
       this.directionState.routesFeatureStore.count$
         .pipe(
-          skipWhile((c) => c < 1),
+          skipWhile((c: number) => c < 1),
           first()
         )
         .subscribe((c) => {
@@ -1342,7 +1333,7 @@ export class PortalComponent implements OnInit, OnDestroy {
       // select the active route by url controls
       this.directionState.routesFeatureStore.count$
         .pipe(
-          skipWhile((c) => c < 2),
+          skipWhile((c: number) => c < 2),
           first()
         )
         .subscribe(() => {
