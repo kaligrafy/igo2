@@ -20,9 +20,10 @@ import {
   ActionStore,
   ActionbarMode,
   EntityRecord,
+  EntityService,
   EntityStore,
   EntityTablePaginatorOptions,
-  Tool, // getEntityTitle,
+  Tool,
   Toolbox,
   Widget,
   Workspace,
@@ -43,7 +44,6 @@ import {
   ConfigFileToGeoDBService,
   DataSourceService,
   EditionWorkspace,
-  EditionWorkspaceService,
   FEATURE,
   Feature,
   FeatureMotion,
@@ -328,7 +328,7 @@ export class PortalComponent implements OnInit, OnDestroy {
     public dialogWindow: MatDialog,
     private queryService: QueryService,
     private storageService: StorageService,
-    private editionWorkspaceService: EditionWorkspaceService,
+    private entityService: EntityService,
     private directionState: DirectionState,
     private configFileToGeoDBService: ConfigFileToGeoDBService
   ) {
@@ -1630,7 +1630,7 @@ export class PortalComponent implements OnInit, OnDestroy {
         relationWorkspace?.meta.tableTemplate.columns.forEach((col) => {
           // Update domain list
           if (col.type === 'list' || col.type === 'autocomplete') {
-            this.editionWorkspaceService
+            this.entityService
               .getDomainValues(col.relation)
               .subscribe((result) => {
                 col.domainValues = result;

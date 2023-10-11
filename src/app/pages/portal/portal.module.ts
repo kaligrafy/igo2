@@ -11,13 +11,13 @@ import {
   IgoBackdropModule,
   IgoContextMenuModule,
   IgoEntityModule,
-  IgoEntityTableModule,
   IgoEntityTablePaginatorModule,
   IgoFlexibleModule,
   IgoInteractiveTourModule,
   IgoPanelModule,
   IgoToolModule,
-  IgoWorkspaceModule
+  IgoWorkspaceModule,
+  MspEntityTableModule
 } from '@igo2/common';
 import {
   IgoContextManagerModule,
@@ -73,7 +73,7 @@ import { IgoWelcomeWindowModule } from './welcome-window/welcome-window.module';
     MapOverlayModule,
     IgoContextManagerModule,
     IgoContextMapButtonModule,
-    IgoEntityTableModule,
+    MspEntityTableModule,
     IgoEntityTablePaginatorModule,
     IgoInteractiveTourModule,
     IgoWelcomeWindowModule
