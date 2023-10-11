@@ -2523,42 +2523,14 @@ igo-entity-table table.igo-entity-table-with-selection tr.igo-entity-table-row-h
   color: white;
 }
 
+igo-entity-table .mat-mdc-table thead {
+  background-color: #fafafa;
+}
+
 igo-entity-table {
   --mat-table-header-container-height: 52px;
   --mat-table-footer-container-height: 48px;
   --mat-table-row-item-container-height: 48px;
-}
-
-igo-entity-selector {
-  --mat-paginator-container-size: 40px;
-}
-
-igo-entity-selector .mat-mdc-paginator .mat-mdc-form-field-infix {
-  min-height: 40px;
-}
-igo-entity-selector .mat-mdc-paginator .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
-  top: 20px;
-}
-igo-entity-selector .mat-mdc-paginator .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
-  --mat-mdc-form-field-label-transform: translateY(
-          -26.75px)
-          scale(var(--mat-mdc-form-field-floating-label-scale, 0.75));
-  transform: var(--mat-mdc-form-field-label-transform);
-}
-igo-entity-selector .mat-mdc-paginator .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
-  padding-top: 8px;
-  padding-bottom: 8px;
-}
-igo-entity-selector .mat-mdc-paginator .mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined) .mat-mdc-form-field-infix {
-  padding-top: 8px;
-  padding-bottom: 8px;
-}
-igo-entity-selector .mat-mdc-paginator .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
-  padding-top: 8px;
-  padding-bottom: 8px;
-}
-igo-entity-selector .mat-mdc-paginator .mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined) .mat-mdc-floating-label {
-  display: none;
 }
 
 igo-entity-selector .mat-mdc-form-field-infix {
@@ -2587,6 +2559,24 @@ igo-entity-selector .mdc-text-field--no-label:not(.mdc-text-field--outlined):not
 }
 igo-entity-selector .mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined) .mat-mdc-floating-label {
   display: none;
+}
+
+igo-list .mat-mdc-icon-button.mat-mdc-button-base {
+  --mdc-icon-button-state-layer-size: 48px;
+  width: var(--mdc-icon-button-state-layer-size);
+  height: var(--mdc-icon-button-state-layer-size);
+  padding: 12px;
+}
+igo-list .mat-mdc-list-base {
+  --mdc-list-list-item-one-line-container-height: 48px;
+  --mdc-list-list-item-two-line-container-height: 64px;
+  --mdc-list-list-item-three-line-container-height: 88px;
+}
+igo-list .mat-mdc-list-item.mdc-list-item--with-leading-avatar.mdc-list-item--with-one-line, igo-list .mat-mdc-list-item.mdc-list-item--with-leading-checkbox.mdc-list-item--with-one-line, igo-list .mat-mdc-list-item.mdc-list-item--with-leading-icon.mdc-list-item--with-one-line {
+  height: 56px;
+}
+igo-list .mat-mdc-list-item.mdc-list-item--with-leading-avatar.mdc-list-item--with-two-lines, igo-list .mat-mdc-list-item.mdc-list-item--with-leading-checkbox.mdc-list-item--with-two-lines, igo-list .mat-mdc-list-item.mdc-list-item--with-leading-icon.mdc-list-item--with-two-lines {
+  height: 72px;
 }
 
 igo-list [igolistitem][color=primary].igo-list-item-selected > mat-list-item {
@@ -2825,14 +2815,6 @@ igo-feature-details > table.igo-striped tbody tr:nth-child(odd) {
   background-color: #ff780a;
 }
 
-igo-ogc-filter-time-slider {
-  /* TODO(mdc-migration): The following rule targets internal classes of slider that may no longer apply for the MDC version. */
-}
-igo-ogc-filter-time-slider .mat-slider-thumb-label {
-  transform: rotate(45deg) !important;
-  border-radius: 50% 50% 0 !important;
-}
-
 igo-ogc-filter-selection mat-button-toggle.mat-button-toggle-checked {
   background-color: #039be5;
   color: #424242;
@@ -2885,11 +2867,6 @@ igo-layer-list-tool .mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined) .
 igo-layer-item.igo-layer-item-focused > mat-list-item {
   background-color: #b3e5fc;
   color: white;
-}
-
-/* TODO(mdc-migration): The following rule targets internal classes of menu that may no longer apply for the MDC version. */
-.mat-menu-opacity-slider {
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.5), 0 4px 5px 0 rgba(0, 0, 0, 0.15), 0 1px 10px 0 rgba(0, 0, 0, 0.4);
 }
 
 igo-map-browser div.ol-attribution > button {
@@ -2979,4 +2956,25 @@ igo-search-bar .mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined) .mat-m
 igo-confirmation-popup-component h1 {
   font-size: 32px;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+igo-catalog-browser .mat-mdc-icon-button.mat-mdc-button-base {
+  --mdc-icon-button-state-layer-size: 40px;
+  width: var(--mdc-icon-button-state-layer-size);
+  height: var(--mdc-icon-button-state-layer-size);
+  padding: 8px;
+}
+igo-catalog-browser .mat-mdc-icon-button.mat-mdc-button-base .mat-mdc-button-touch-target {
+  display: none;
+}
+igo-catalog-browser .mat-mdc-list-base {
+  --mdc-list-list-item-one-line-container-height: 40px;
+  --mdc-list-list-item-two-line-container-height: 56px;
+  --mdc-list-list-item-three-line-container-height: 80px;
+}
+igo-catalog-browser .mat-mdc-list-item.mdc-list-item--with-leading-avatar.mdc-list-item--with-one-line, igo-catalog-browser .mat-mdc-list-item.mdc-list-item--with-leading-checkbox.mdc-list-item--with-one-line, igo-catalog-browser .mat-mdc-list-item.mdc-list-item--with-leading-icon.mdc-list-item--with-one-line {
+  height: 48px;
+}
+igo-catalog-browser .mat-mdc-list-item.mdc-list-item--with-leading-avatar.mdc-list-item--with-two-lines, igo-catalog-browser .mat-mdc-list-item.mdc-list-item--with-leading-checkbox.mdc-list-item--with-two-lines, igo-catalog-browser .mat-mdc-list-item.mdc-list-item--with-leading-icon.mdc-list-item--with-two-lines {
+  height: 64px;
 }
