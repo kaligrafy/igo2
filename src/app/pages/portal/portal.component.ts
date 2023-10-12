@@ -23,6 +23,7 @@ import {
   EntityService,
   EntityStore,
   EntityTablePaginatorOptions,
+  MspEntityTableComponent,
   Tool,
   Toolbox,
   Widget,
@@ -177,10 +178,15 @@ export class PortalComponent implements OnInit, OnDestroy {
   public homeExtent: MapExtent;
   public homeCenter: [number, number];
   public homeZoom: number;
+
   @ViewChild('mapBrowser', { read: ElementRef, static: true })
   mapBrowser: ElementRef;
+
   @ViewChild('searchBar', { read: ElementRef, static: true })
   searchBar: ElementRef;
+
+  @ViewChild(MspEntityTableComponent, { static: false })
+  entityTable: MspEntityTableComponent;
 
   get map(): IgoMap {
     return this.mapState.map;
@@ -569,13 +575,17 @@ export class PortalComponent implements OnInit, OnDestroy {
   }
 
   addFeature(workspace: EditionWorkspace) {
-    let feature = {
+    if (!this.entityTable) {
+      return;
+    }
+    this.entityTable.enableEdition();
+
+    const feature: Feature = {
       type: 'Feature',
-      properties: {}
+      properties: this.createFeatureProperties(workspace.layer)
     };
-    feature.properties = this.createFeatureProperties(workspace.layer);
     this.workspaceState.rowsInMapExtentCheckCondition$.next(false);
-    workspace.editFeature(feature, workspace);
+    workspace.editFeature(feature);
   }
 
   createFeatureProperties(layer: ImageLayer | VectorLayer) {

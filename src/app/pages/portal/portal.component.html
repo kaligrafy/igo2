@@ -285,14 +285,13 @@
 
   <ng-container *ngIf="selectedWorkspace$ | async as workspace">
     <msp-entity-table
-      [class]="isEditionWorkspace(workspace) ? 'edition-table' : ''"
-      [paginator]="workspacePaginator"
       *ngIf="
         workspace.entityStore &&
-        workspace.meta &&
-        workspace.meta.tableTemplate &&
+        workspace.meta?.tableTemplate &&
         workspaceVisibility()
       "
+      [class]="isEditionWorkspace(workspace) ? 'edition-table' : ''"
+      [paginator]="workspacePaginator"
       [store]="workspace.entityStore"
       (entitySortChange)="entitySortChange()"
       (entitySelectChange)="entitySelectChange($event)"
