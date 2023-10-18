@@ -1,5 +1,5 @@
 h4 {
-  font-size: 16px !important;
+  font-size: 14px !important;
   line-height: 22px !important;
   font-weight: 500 !important;
 }
@@ -209,9 +209,9 @@ textarea.cdk-textarea-autosize-measuring-firefox {
 .mat-typography .mat-h1,
 .mat-typography .mat-headline-5,
 .mat-typography h1 {
-  font-size: 32px;
-  font-weight: 500;
-  line-height: 38px;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
   font-family: Roboto, sans-serif;
   letter-spacing: normal;
   margin: 0 0 16px;
@@ -222,8 +222,8 @@ textarea.cdk-textarea-autosize-measuring-firefox {
 .mat-typography .mat-h2,
 .mat-typography .mat-headline-6,
 .mat-typography h2 {
-  font-size: 22px;
-  font-weight: 500;
+  font-size: 20px;
+  font-weight: 400;
   line-height: 30px;
   font-family: Roboto, sans-serif;
   letter-spacing: normal;
@@ -235,7 +235,7 @@ textarea.cdk-textarea-autosize-measuring-firefox {
 .mat-typography .mat-h3,
 .mat-typography .mat-subtitle-1,
 .mat-typography h3 {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   line-height: 26px;
   font-family: Roboto, sans-serif;
@@ -274,7 +274,7 @@ textarea.cdk-textarea-autosize-measuring-firefox {
 .mat-subtitle-2,
 .mat-typography .mat-body-strong,
 .mat-typography .mat-subtitle-2 {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 22px;
   font-family: Roboto, sans-serif;
@@ -580,12 +580,12 @@ html {
 .mat-mdc-card {
   --mat-card-title-text-font: Roboto, sans-serif;
   --mat-card-title-text-line-height: 30px;
-  --mat-card-title-text-size: 22px;
+  --mat-card-title-text-size: 20px;
   --mat-card-title-text-tracking: normal;
-  --mat-card-title-text-weight: 500;
+  --mat-card-title-text-weight: 400;
   --mat-card-subtitle-text-font: Roboto, sans-serif;
   --mat-card-subtitle-text-line-height: 22px;
-  --mat-card-subtitle-text-size: 16px;
+  --mat-card-subtitle-text-size: 14px;
   --mat-card-subtitle-text-tracking: normal;
   --mat-card-subtitle-text-weight: 500;
 }
@@ -906,8 +906,8 @@ html {
 .mat-mdc-dialog-container {
   --mdc-dialog-subhead-font: Roboto, sans-serif;
   --mdc-dialog-subhead-line-height: 30px;
-  --mdc-dialog-subhead-size: 22px;
-  --mdc-dialog-subhead-weight: 500;
+  --mdc-dialog-subhead-size: 20px;
+  --mdc-dialog-subhead-weight: 400;
   --mdc-dialog-subhead-tracking: normal;
   --mdc-dialog-supporting-text-font: Roboto, sans-serif;
   --mdc-dialog-supporting-text-line-height: 22px;
@@ -1198,7 +1198,7 @@ html {
 
 .mat-mdc-slider {
   --mdc-slider-label-label-text-font: Roboto, sans-serif;
-  --mdc-slider-label-label-text-size: 16px;
+  --mdc-slider-label-label-text-size: 14px;
   --mdc-slider-label-label-text-line-height: 22px;
   --mdc-slider-label-label-text-tracking: normal;
   --mdc-slider-label-label-text-weight: 500;
@@ -1386,7 +1386,7 @@ html {
 }
 
 .mdc-list-group__subheader {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   line-height: 26px;
   font-family: Roboto, sans-serif;
@@ -1915,7 +1915,7 @@ html {
 html {
   --mat-table-header-headline-font: Roboto, sans-serif;
   --mat-table-header-headline-line-height: 22px;
-  --mat-table-header-headline-size: 16px;
+  --mat-table-header-headline-size: 14px;
   --mat-table-header-headline-weight: 500;
   --mat-table-header-headline-tracking: normal;
   --mat-table-row-item-label-text-font: Roboto, sans-serif;
@@ -2293,7 +2293,7 @@ html {
 
 html {
   --mat-expansion-header-text-font: Roboto, sans-serif;
-  --mat-expansion-header-text-size: 16px;
+  --mat-expansion-header-text-size: 14px;
   --mat-expansion-header-text-weight: 500;
   --mat-expansion-header-text-line-height: inherit;
   --mat-expansion-header-text-tracking: inherit;
@@ -2417,9 +2417,9 @@ html {
 html {
   --mat-toolbar-title-text-font: Roboto, sans-serif;
   --mat-toolbar-title-text-line-height: 30px;
-  --mat-toolbar-title-text-size: 22px;
+  --mat-toolbar-title-text-size: 20px;
   --mat-toolbar-title-text-tracking: normal;
-  --mat-toolbar-title-text-weight: 500;
+  --mat-toolbar-title-text-weight: 400;
 }
 
 .mat-tree {
@@ -2769,7 +2769,7 @@ igo-draw-shorcuts .igo-map-tooltip-draw,
 igo-draw .igo-map-tooltip-draw {
   color: rgba(0, 0, 0, 0.87);
   font-weight: bold;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 igo-draw-popup-component h1 {
@@ -2825,6 +2825,11 @@ igo-ogc-filter-selection mat-button-toggle {
 
 igo-layer-legend img:after {
   border-top-color: #3f51b5;
+}
+
+igo-layer-list-tool mat-form-field .mat-mdc-text-field-wrapper,
+igo-layer-list-tool mat-form-field .mat-mdc-form-field-focus-overlay {
+  background-color: white !important;
 }
 
 igo-layer-list-tool .mat-mdc-icon-button.mat-mdc-button-base {
@@ -2915,14 +2920,12 @@ igo-menu-button > button#menu-button.menu-button-white-background {
 }
 
 .igo-map-tooltip-measure {
-  font-size: 18px;
+  font-size: 16px;
 }
 
-igo-search-bar mat-form-field .mat-mdc-text-field-wrapper {
+igo-search-bar mat-form-field .mat-mdc-text-field-wrapper,
+igo-search-bar mat-form-field .mat-mdc-form-field-focus-overlay {
   background-color: white !important;
-}
-igo-search-bar mat-form-field .mdc-line-ripple {
-  display: none;
 }
 
 igo-search-bar .mat-mdc-form-field-infix {
@@ -2951,6 +2954,17 @@ igo-search-bar .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc
 }
 igo-search-bar .mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined) .mat-mdc-floating-label {
   display: none;
+}
+
+igo-search-bar mat-form-field .mdc-line-ripple {
+  display: none;
+}
+
+igo-search-results-item .mdc-list-item--with-leading-icon:hover .mdc-list-item__start {
+  color: black;
+}
+igo-search-results-item .mdc-list-item--with-leading-icon .mdc-list-item__start {
+  color: rgba(0, 0, 0, 0.87);
 }
 
 igo-confirmation-popup-component h1 {
