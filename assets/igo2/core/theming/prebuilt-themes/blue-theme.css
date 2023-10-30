@@ -274,7 +274,7 @@ textarea.cdk-textarea-autosize-measuring-firefox {
 .mat-subtitle-2,
 .mat-typography .mat-body-strong,
 .mat-typography .mat-subtitle-2 {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   line-height: 22px;
   font-family: Roboto, sans-serif;
@@ -585,7 +585,7 @@ html {
   --mat-card-title-text-weight: 400;
   --mat-card-subtitle-text-font: Roboto, sans-serif;
   --mat-card-subtitle-text-line-height: 22px;
-  --mat-card-subtitle-text-size: 14px;
+  --mat-card-subtitle-text-size: 12px;
   --mat-card-subtitle-text-tracking: normal;
   --mat-card-subtitle-text-weight: 500;
 }
@@ -1198,7 +1198,7 @@ html {
 
 .mat-mdc-slider {
   --mdc-slider-label-label-text-font: Roboto, sans-serif;
-  --mdc-slider-label-label-text-size: 14px;
+  --mdc-slider-label-label-text-size: 12px;
   --mdc-slider-label-label-text-line-height: 22px;
   --mdc-slider-label-label-text-tracking: normal;
   --mdc-slider-label-label-text-weight: 500;
@@ -1915,7 +1915,7 @@ html {
 html {
   --mat-table-header-headline-font: Roboto, sans-serif;
   --mat-table-header-headline-line-height: 22px;
-  --mat-table-header-headline-size: 14px;
+  --mat-table-header-headline-size: 12px;
   --mat-table-header-headline-weight: 500;
   --mat-table-header-headline-tracking: normal;
   --mat-table-row-item-label-text-font: Roboto, sans-serif;
@@ -2293,7 +2293,7 @@ html {
 
 html {
   --mat-expansion-header-text-font: Roboto, sans-serif;
-  --mat-expansion-header-text-size: 14px;
+  --mat-expansion-header-text-size: 12px;
   --mat-expansion-header-text-weight: 500;
   --mat-expansion-header-text-line-height: inherit;
   --mat-expansion-header-text-tracking: inherit;
@@ -2872,6 +2872,12 @@ igo-layer-list-tool .mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined) .
 igo-layer-item.igo-layer-item-focused > mat-list-item {
   background-color: #bbdefb;
   color: white;
+}
+igo-layer-item button:not(.mat-primary) mat-icon {
+  color: #9e9e9e;
+}
+igo-layer-item button mat-icon.disabled {
+  color: rgba(158, 158, 158, 0.38);
 }
 
 igo-map-browser div.ol-attribution > button {
