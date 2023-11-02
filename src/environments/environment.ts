@@ -41,6 +41,11 @@ export const environment: AppEnvironmentOptions = {
     catalog: {
       sources: [
         {
+          id:'1',
+          title:'Geodev',
+          url:'/ws/all.fcgi'
+        },
+        {
           id: 'Image Arcgis Rest',
           title: 'Image Arcgis Rest',
           externalProvider: true,
